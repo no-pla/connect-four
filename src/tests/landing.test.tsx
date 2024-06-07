@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Page from "../App";
+import LandingBox from "../components/LandingBox";
 
 describe("랜딩 페이지 테스트", () => {
   describe("요소 랜더링 테스트", () => {
@@ -21,40 +22,59 @@ describe("랜딩 페이지 테스트", () => {
 
   describe("플로우 테스트", () => {
     it("첫 번째 버튼 클릭 시 게임 페이지로 이동하는지 테스트한다", async () => {
-      render(<Page />);
-      const gameStartButton = screen.getByLabelText(/시작/i);
-      await act(async () => {
-        fireEvent.click(gameStartButton);
+      render(<LandingBox />);
+      const gameStartButton = screen.getByRole("button", {
+        name: /플레이/i,
       });
+      fireEvent.click(gameStartButton);
       expect(global.window.location.pathname).toContain("/game");
     });
   });
 
   describe("모달 테스트", () => {
-    it("두 번째 버튼 클릭 시 게임 설명 모달이 표시되는지 테스트한다", async () => {
-      const { container } = render(<Page />);
-      const modalButton = container.querySelector("#modal_button")!;
-      await act(async () => {
-        fireEvent.click(modalButton);
-      });
-      const modal = container.querySelector("#modal");
+    it("두 번째 버튼 클릭 시 게임 설명 모달이 표시되는지 테스트한다", () => {
+      const { unmount, getByTestId } = render(<Page />);
+      let portalRoot = document.getElementById("portal");
+      if (!portalRoot) {
+        portalRoot = document.createElement("div");
+        portalRoot.setAttribute("id", "portal");
+        document.body.appendChild(portalRoot);
+      }
+
+      const modalOpenButton = getByTestId("modal-open-button");
+      expect(modalOpenButton).toBeInTheDocument();
+
+      fireEvent.click(modalOpenButton);
+
+      const modal = getByTestId("modal");
       expect(modal).toBeInTheDocument();
+
+      unmount();
     });
 
-    it("모달 닫기 버튼을 클릭 시 모달이 화면에서 사라지는지 테스트한다.", async () => {
-      const { container } = render(<Page />);
+    it("모달 닫기 버튼을 클릭 시 모달이 화면에서 사라지는지 테스트한다.", () => {
+      const { unmount, getByTestId } = render(<Page />);
+      let portalRoot = document.getElementById("portal");
+      if (!portalRoot) {
+        portalRoot = document.createElement("div");
+        portalRoot.setAttribute("id", "portal");
+        document.body.appendChild(portalRoot);
+      }
 
-      const modalButton = container.querySelector("#modal_button")!;
-      await act(async () => {
-        fireEvent.click(modalButton);
-      });
+      const modalOpenButton = getByTestId("modal-open-button");
+      expect(modalOpenButton).toBeInTheDocument();
 
-      const modal = container.querySelector("#modal");
-      const modalCloseButton = container.querySelector("#modal_close_button")!;
-      await act(async () => {
-        fireEvent.click(modalCloseButton);
-      });
+      fireEvent.click(modalOpenButton);
+
+      const modal = getByTestId("modal");
+      expect(modal).toBeInTheDocument();
+
+      const modalCloseButton = getByTestId("modal-close-button");
+
+      fireEvent.click(modalCloseButton);
       expect(modal).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 });
