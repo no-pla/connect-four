@@ -10,6 +10,7 @@ export default {
         red: "#fd6687",
         white: "#ffffff",
         yellow: "#ffce67",
+        backdrop: "rgba(0, 0, 0, 0.5)",
       },
       fontSize: {
         headingL: ["56px", "71px"],
