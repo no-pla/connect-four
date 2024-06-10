@@ -1,60 +1,93 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { act, fireEvent, render, screen } from "@testing-library/react";
-import Index from "../landing";
+import { render, screen } from "@testing-library/react";
+import LandingBox from "../components/LandingBox";
+import { BrowserRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 describe("랜딩 페이지 테스트", () => {
   describe("요소 랜더링 테스트", () => {
     beforeEach(() => {
-      render(<Index />);
+      render(<LandingBox />, { wrapper: BrowserRouter });
     });
 
     it("버튼이 모두 렌더링되는지 테스트한다", () => {
-      const buttons = screen.getByRole("button");
+      const buttons = screen.getAllByRole("button");
       expect(buttons).length(2);
     });
 
     it("로고가 올바르게 렌더링되는지 테스트한다", () => {
-      const logo = screen.getByAltText(/로고/i);
+      const logo = screen.getByTitle(/logo/i);
       expect(logo).toBeInTheDocument();
     });
   });
 
   describe("플로우 테스트", () => {
     it("첫 번째 버튼 클릭 시 게임 페이지로 이동하는지 테스트한다", async () => {
-      render(<Index />);
-      const gameStartButton = screen.getByLabelText(/시작/i);
-      await act(async () => {
-        fireEvent.click(gameStartButton);
+      const user = userEvent.setup();
+      render(<LandingBox />, { wrapper: BrowserRouter });
+
+      const gameStartButton = screen.getByRole("button", {
+        name: /플레이/i,
       });
-      expect(global.window.location.pathname).toContain("/game");
+      expect(gameStartButton).toBeInTheDocument();
+
+      await user.click(gameStartButton);
+
+      expect(window.location.pathname).toBe("/game");
     });
   });
 
   describe("모달 테스트", () => {
     it("두 번째 버튼 클릭 시 게임 설명 모달이 표시되는지 테스트한다", async () => {
-      const { container } = render(<Index />);
-      const modalButton = container.querySelector("#modal_button")!;
-      await act(async () => {
-        fireEvent.click(modalButton);
+      const user = userEvent.setup();
+      const { unmount, getByTestId } = render(<LandingBox />, {
+        wrapper: BrowserRouter,
       });
-      const modal = container.querySelector("#modal");
+      let portalRoot = document.getElementById("portal");
+      if (!portalRoot) {
+        portalRoot = document.createElement("div");
+        portalRoot.setAttribute("id", "portal");
+        document.body.appendChild(portalRoot);
+      }
+
+      const modalOpenButton = getByTestId("modal-open-button");
+      expect(modalOpenButton).toBeInTheDocument();
+
+      await user.click(modalOpenButton);
+
+      const modal = getByTestId("modal");
       expect(modal).toBeInTheDocument();
+
+      unmount();
     });
 
     it("모달 닫기 버튼을 클릭 시 모달이 화면에서 사라지는지 테스트한다.", async () => {
-      const { container } = render(<Index />);
+      const user = userEvent.setup();
 
-      const modalButton = container.querySelector("#modal_button")!;
-      await act(async () => {
-        fireEvent.click(modalButton);
+      const { unmount, getByTestId } = render(<LandingBox />, {
+        wrapper: BrowserRouter,
       });
+      let portalRoot = document.getElementById("portal");
+      if (!portalRoot) {
+        portalRoot = document.createElement("div");
+        portalRoot.setAttribute("id", "portal");
+        document.body.appendChild(portalRoot);
+      }
 
-      const modal = container.querySelector("#modal");
-      const modalCloseButton = container.querySelector("#modal_close_button")!;
-      await act(async () => {
-        fireEvent.click(modalCloseButton);
-      });
+      const modalOpenButton = getByTestId("modal-open-button");
+      expect(modalOpenButton).toBeInTheDocument();
+
+      await user.click(modalOpenButton);
+
+      const modal = getByTestId("modal");
+      expect(modal).toBeInTheDocument();
+
+      const modalCloseButton = getByTestId("modal-close-button");
+
+      await user.click(modalCloseButton);
       expect(modal).not.toBeInTheDocument();
+
+      unmount();
     });
   });
 });
