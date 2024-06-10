@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
-import Page from "../App";
+import { render, screen } from "@testing-library/react";
 import LandingBox from "../components/LandingBox";
 import { BrowserRouter } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 describe("랜딩 페이지 테스트", () => {
   describe("요소 랜더링 테스트", () => {
     beforeEach(() => {
-      render(<Page />, { wrapper: BrowserRouter });
+      render(<LandingBox />, { wrapper: BrowserRouter });
     });
 
     it("버튼이 모두 렌더링되는지 테스트한다", () => {
@@ -22,7 +22,8 @@ describe("랜딩 페이지 테스트", () => {
   });
 
   describe("플로우 테스트", () => {
-    it("첫 번째 버튼 클릭 시 게임 페이지로 이동하는지 테스트한다", () => {
+    it("첫 번째 버튼 클릭 시 게임 페이지로 이동하는지 테스트한다", async () => {
+      const user = userEvent.setup();
       render(<LandingBox />, { wrapper: BrowserRouter });
 
       const gameStartButton = screen.getByRole("button", {
@@ -30,15 +31,16 @@ describe("랜딩 페이지 테스트", () => {
       });
       expect(gameStartButton).toBeInTheDocument();
 
-      fireEvent.click(gameStartButton);
-      // const redirectUrl = "/game";
-      console.log(window);
+      await user.click(gameStartButton);
+
+      expect(window.location.pathname).toBe("/game");
     });
   });
 
   describe("모달 테스트", () => {
-    it("두 번째 버튼 클릭 시 게임 설명 모달이 표시되는지 테스트한다", () => {
-      const { unmount, getByTestId } = render(<Page />, {
+    it("두 번째 버튼 클릭 시 게임 설명 모달이 표시되는지 테스트한다", async () => {
+      const user = userEvent.setup();
+      const { unmount, getByTestId } = render(<LandingBox />, {
         wrapper: BrowserRouter,
       });
       let portalRoot = document.getElementById("portal");
@@ -51,7 +53,7 @@ describe("랜딩 페이지 테스트", () => {
       const modalOpenButton = getByTestId("modal-open-button");
       expect(modalOpenButton).toBeInTheDocument();
 
-      fireEvent.click(modalOpenButton);
+      await user.click(modalOpenButton);
 
       const modal = getByTestId("modal");
       expect(modal).toBeInTheDocument();
@@ -59,8 +61,10 @@ describe("랜딩 페이지 테스트", () => {
       unmount();
     });
 
-    it("모달 닫기 버튼을 클릭 시 모달이 화면에서 사라지는지 테스트한다.", () => {
-      const { unmount, getByTestId } = render(<Page />, {
+    it("모달 닫기 버튼을 클릭 시 모달이 화면에서 사라지는지 테스트한다.", async () => {
+      const user = userEvent.setup();
+
+      const { unmount, getByTestId } = render(<LandingBox />, {
         wrapper: BrowserRouter,
       });
       let portalRoot = document.getElementById("portal");
@@ -73,14 +77,14 @@ describe("랜딩 페이지 테스트", () => {
       const modalOpenButton = getByTestId("modal-open-button");
       expect(modalOpenButton).toBeInTheDocument();
 
-      fireEvent.click(modalOpenButton);
+      await user.click(modalOpenButton);
 
       const modal = getByTestId("modal");
       expect(modal).toBeInTheDocument();
 
       const modalCloseButton = getByTestId("modal-close-button");
 
-      fireEvent.click(modalCloseButton);
+      await user.click(modalCloseButton);
       expect(modal).not.toBeInTheDocument();
 
       unmount();
