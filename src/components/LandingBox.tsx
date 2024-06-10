@@ -7,9 +7,11 @@ import Button from "./Button";
 import Container from "./Container";
 import Backdrop from "./Modal/Backdrop";
 import Modal from "./Modal/Modal";
+import { useNavigate } from "react-router-dom";
 
 const LandingBox = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   return (
     <Container primary>
@@ -20,7 +22,11 @@ const LandingBox = () => {
           }}
         />
         <div className="flex flex-col gap-[30px] mt-20">
-          <Button text="유저와 플레이" primary>
+          <Button
+            text="유저와 플레이"
+            primary
+            onClick={() => navigate("/game")}
+          >
             <PlayWithUser />
           </Button>
           <Button

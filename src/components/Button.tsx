@@ -21,7 +21,7 @@ const Button = ({ text, primary, testId, onClick, children }: ButtonData) => {
       >
         {text}
       </button>
-      <div className="absolute top-1/2 -translate-y-1/2 right-4">
+      <div className="absolute top-1/2 -translate-y-1/2 right-4 z-0 pointer-events-none	">
         {children}
       </div>
     </div>
