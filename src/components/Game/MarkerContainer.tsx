@@ -1,11 +1,11 @@
 import RedMarker from "../../assets/images/counter-red-large.svg?react";
 import YellowMarker from "../../assets/images/counter-yellow-large.svg?react";
 import { useDispatch, useSelector } from "react-redux";
-import { changePlayer, drop } from "../../slices/gameSlice";
+import { drop } from "../../slices/gameSlice";
 
 interface selectorData {
   game: {
-    board: (null | "R" | "Y")[][];
+    board: (null | "RED" | "YELLOW")[][];
     currentPlayer: "RED" | "YELLOW";
   };
 }
@@ -29,8 +29,7 @@ const MarkerContainer = () => {
      * TODO
      * ! 만약 모두 찬 열을 클릭한 경우, 유저가 바뀌지 않는다.
      */
-    dispatch(drop({ lineNumber }));
-    dispatch(changePlayer({ player }));
+    dispatch(drop({ lineNumber, player }));
   };
 
   return (
@@ -46,8 +45,8 @@ const MarkerContainer = () => {
             {line.map((field, idx) => {
               return (
                 <div key={`${index}${idx}`}>
-                  {field === "R" && <RedMarker />}
-                  {field === "Y" && <YellowMarker />}
+                  {field === "RED" && <RedMarker />}
+                  {field === "YELLOW" && <YellowMarker />}
                   {field === null && (
                     <div className="w-[70px] h-[75px] bg-transparent flex justify-center items-center"></div>
                   )}
