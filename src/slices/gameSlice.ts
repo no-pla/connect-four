@@ -12,7 +12,7 @@ const initialState = {
   ] as ("RED" | "YELLOW" | null)[][],
   currentPlayer: "RED",
   markerCount: 0,
-  winner: null,
+  winner: null as string | null,
 };
 
 export const gameSlice = createSlice({
@@ -24,18 +24,17 @@ export const gameSlice = createSlice({
         console.warn(`이미 종료된 게임입니다. 승자는 ${state.winner}입니다.`);
         return;
       }
+
       if (state.board[actions.payload.lineNumber][0] !== null) {
         console.warn(
           `${actions.payload.lineNumber + 1} 열은 이미 전부 채워진 열입니다.`
         );
         return;
       }
-
-      let location = null;
+      let location: null | number = null;
 
       /**
        * 만약 선택한 행의 첫 번째 셀이 null이 아니면 리턴.
-       * TODO: 위 경우 다시 마커를 둘 수 있도록 처리해야 한다.
        */
       for (let i = 6; i >= 0; i--) {
         if (state.board[actions.payload.lineNumber][i] === null) {
@@ -48,78 +47,62 @@ export const gameSlice = createSlice({
 
       state.markerCount += 1;
 
-      let rowCount = 1;
-      let colCount = 1;
+      // 모든 방향을 체크하기 위해 방향 벡터를 사용한다.
+      const movement = [
+        { dx: 1, dy: 0 }, // 가로
+        { dx: 0, dy: 1 }, // 세로
+        { dx: 1, dy: 1 }, // 양수 대각선
+        { dx: 1, dy: -1 }, // 음수 대각선
+      ];
 
-      if (state.markerCount >= 7) {
-        for (let i = 1; i <= 3; i++) {
-          if ((rowCount || colCount) >= 4) {
-            break;
-          }
+      // 연결 테스트
+      const checkDirection = (dx: number, dy: number) => {
+        let count = 1; // 기존 마커도 추가.
 
-          // 가로 테스트
-          if (
-            actions.payload.lineNumber + i <= 6 &&
-            state.board[actions.payload.lineNumber + i][location!] ===
-              actions.payload.player
-          ) {
-            rowCount += 1;
-          } else {
-            break;
-          }
+        let pnx = actions.payload.lineNumber + dx; // X축 각 방향별로 1칸씩 이동
+        let pny = location! + dy; // Y축 각 방향별로 1칸씩 이동
+
+        while (
+          // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
+          // 만약 마커가 보드를 넘어갈 경우, 종료.
+          pnx >= 0 &&
+          pny >= 0 &&
+          pnx <= 6 &&
+          pny <= 5 &&
+          state.board[pnx][pny] === actions.payload.player
+        ) {
+          count++;
+          pnx += dx;
+          pny += dy;
         }
 
-        for (let i = 1; i <= 3; i++) {
-          if ((rowCount || colCount) >= 4) {
-            break;
-          }
+        let mnx = actions.payload.lineNumber - dx; // X축 각 방향별로 1칸씩 이동
+        let mny = location! - dy; // Y축 각 방향별로 1칸씩 이동
 
-          if (
-            actions.payload.lineNumber - i >= 0 &&
-            state.board[actions.payload.lineNumber - i][location!] ===
-              actions.payload.player
-          ) {
-            rowCount += 1;
-          } else {
-            break;
-          }
-        }
-        // 세로 테스트
-        for (let i = 1; i <= 3; i++) {
-          if ((rowCount || colCount) >= 4) {
-            break;
-          }
-
-          if (
-            location! + i <= 5 &&
-            state.board[actions.payload.lineNumber][location! + i] ===
-              actions.payload.player
-          ) {
-            colCount += 1;
-          } else {
-            break;
-          }
+        while (
+          // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
+          // 만약 마커가 보드를 넘어갈 경우, 종료.
+          mnx >= 0 &&
+          mny >= 0 &&
+          mnx <= 6 &&
+          mny <= 5 &&
+          state.board[mnx][mny] === actions.payload.player
+        ) {
+          count++;
+          mnx += dx;
+          mny += dy;
         }
 
-        for (let i = 1; i <= 3; i++) {
-          if ((rowCount || colCount) >= 4) {
-            break;
-          }
+        return count;
+      };
 
-          if (
-            location! - i >= 5 &&
-            state.board[actions.payload.lineNumber][location! - i] ===
-              actions.payload.player
-          ) {
-            colCount += 1;
-          } else {
-            break;
-          }
-        }
-        // TODO: 대각선 테스트
+      for (const { dx, dy } of movement) {
+        const count = checkDirection(dx, dy);
 
-        if (colCount >= 4 || rowCount >= 4) {
+        if (count >= 4) {
           state.winner = actions.payload.player;
+          console.log(`${state.winner}가 승리했습니다.`);
+          return;
         }
       }
 
