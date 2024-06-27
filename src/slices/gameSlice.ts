@@ -51,8 +51,8 @@ export const gameSlice = createSlice({
       const movement = [
         { dx: 1, dy: 0 }, // 가로
         { dx: 0, dy: 1 }, // 세로
-        { dx: 1, dy: 1 }, // 양수 대각선
-        { dx: 1, dy: -1 }, // 음수 대각선
+        { dx: -1, dy: 1 }, // 양수 대각선
+        { dx: -1, dy: -1 }, // 음수 대각선
       ];
 
       // 연결 테스트
@@ -89,8 +89,8 @@ export const gameSlice = createSlice({
           state.board[mnx][mny] === actions.payload.player
         ) {
           count++;
-          mnx += dx;
-          mny += dy;
+          mnx -= dx;
+          mny -= dy;
         }
 
         return count;
