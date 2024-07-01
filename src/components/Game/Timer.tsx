@@ -5,7 +5,6 @@ import RedTimer from "../../assets/images/turn-background-red.svg?react";
 import YellowTimer from "../../assets/images/turn-background-yellow.svg?react";
 import { useInterval } from "../../hooks/useInterval";
 import { forceDrop, ticktock } from "../../slices/gameSlice";
-import { useState } from "react";
 
 interface GameData {
   game: {
@@ -14,14 +13,15 @@ interface GameData {
     markerCounter: number;
     winner: "RED" | "YELLOW" | null;
     timer: number;
+    stop: boolean;
   };
 }
 
 const Timer = () => {
   const player = useSelector((state: GameData) => state.game.currentPlayer);
   const time = useSelector((state: GameData) => state.game.timer);
+  const stop = useSelector((state: GameData) => state.game.stop);
   const dispatch = useDispatch();
-  const [stop, setStop] = useState(false);
 
   useInterval(
     () => {
@@ -40,7 +40,6 @@ const Timer = () => {
       className={`relative ${
         player === "RED" ? "text-white" : "text-black"
       } border-black`}
-      onClick={() => setStop((prev) => !prev)}
     >
       <div className="rounded-[20px] shadow-container h-[154px]">
         {player === "RED" ? <RedTimer /> : <YellowTimer />}

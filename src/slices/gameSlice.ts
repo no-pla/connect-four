@@ -16,6 +16,7 @@ const initialState = {
   redWin: 0,
   yellowWin: 0,
   timer: 30,
+  stop: false,
 };
 
 export const gameSlice = createSlice({
@@ -23,6 +24,7 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     drop: (state, actions) => {
+      if (state.stop) return;
       if (state.winner !== null) {
         console.warn(`이미 종료된 게임입니다. 승자는 ${state.winner}입니다.`);
         return;
@@ -129,9 +131,12 @@ export const gameSlice = createSlice({
       console.log("강제 드롭");
       return;
     },
+    setStop: (state) => {
+      state.stop = state.stop === true ? false : true;
+    },
   },
 });
 
-export const { drop, reset, ticktock, forceDrop } = gameSlice.actions;
+export const { drop, reset, ticktock, forceDrop, setStop } = gameSlice.actions;
 
 export default gameSlice.reducer;
