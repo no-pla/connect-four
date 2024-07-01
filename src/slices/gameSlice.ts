@@ -15,6 +15,7 @@ const initialState = {
   winner: null as string | null,
   redWin: 0,
   yellowWin: 0,
+  timer: 30,
 };
 
 export const gameSlice = createSlice({
@@ -118,12 +119,19 @@ export const gameSlice = createSlice({
       }
 
       state.currentPlayer = actions.payload.player === "RED" ? "YELLOW" : "RED";
+      state.timer = 30;
     },
-
     reset: () => initialState,
+    ticktock: (state) => {
+      state.timer -= 1;
+    },
+    forceDrop: () => {
+      console.log("강제 드롭");
+      return;
+    },
   },
 });
 
-export const { drop, reset } = gameSlice.actions;
+export const { drop, reset, ticktock, forceDrop } = gameSlice.actions;
 
 export default gameSlice.reducer;

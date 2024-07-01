@@ -1,7 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+"use client";
+
+import { useDispatch, useSelector } from "react-redux";
 import RedTimer from "../../assets/images/turn-background-red.svg?react";
 import YellowTimer from "../../assets/images/turn-background-yellow.svg?react";
+import { useInterval } from "../../hooks/useInterval";
+import { forceDrop, ticktock } from "../../slices/gameSlice";
 
 interface GameData {
   game: {
@@ -9,12 +12,22 @@ interface GameData {
     currentPlayer: "RED" | "YELLOW";
     markerCounter: number;
     winner: "RED" | "YELLOW" | null;
+    timer: number;
   };
 }
 
 const Timer = () => {
   const player = useSelector((state: GameData) => state.game.currentPlayer);
-  const time = 30;
+  const time = useSelector((state: GameData) => state.game.timer);
+  const dispatch = useDispatch();
+
+  useInterval(() => {
+    if (time > 0) {
+      dispatch(ticktock());
+    } else if (time <= 0) {
+      dispatch(forceDrop());
+    }
+  }, time > 0);
 
   return (
     <div
