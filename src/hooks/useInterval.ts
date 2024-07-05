@@ -28,6 +28,7 @@ export function useInterval(
     }
     if (!isStop.current) {
       const time = setInterval(tick, 1000);
+      setTimeOver(false);
       return () => clearInterval(time);
     }
   }, [timeOver, condition, stop]);
