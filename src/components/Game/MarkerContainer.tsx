@@ -1,5 +1,8 @@
-import RedMarker from "../../assets/images/counter-red-large.svg?react";
-import YellowMarker from "../../assets/images/counter-yellow-large.svg?react";
+import React from "react";
+import BigRedMarker from "../../assets/images/counter-red-large.svg?react";
+import SmallRedMarker from "../../assets/images/counter-red-small.svg?react";
+import BigYellowMarker from "../../assets/images/counter-yellow-large.svg?react";
+import SmallYellowMarker from "../../assets/images/counter-yellow-small.svg?react";
 import { useDispatch, useSelector } from "react-redux";
 import { drop } from "../../slices/gameSlice";
 
@@ -20,35 +23,44 @@ const MarkerContainer = () => {
     dropMarker(+event.currentTarget.id);
   };
 
-  /**
-   * @description 유저가 선택한 라인의 숫자를 기반으로 맨 아래(null)에 마커를 둔다.
-   * @param lineNumber
-   */
   const dropMarker = (lineNumber: number) => {
-    /**
-     * TODO
-     * ! 만약 모두 찬 열을 클릭한 경우, 유저가 바뀌지 않는다.
-     */
     dispatch(drop({ lineNumber, player }));
   };
 
+  // 테블릿 수정
   return (
-    <div className="grid gap-x-[18px] ml-4 -mt-3 grid-cols-7 grid-flow-rows">
+    <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:mt-0 mini:mb-10 mini:mt-0 mini:ml-[6px] mini:gap-x-1">
       {board.map((line, index) => {
         return (
           <div
             key={index}
             id={index.toString()}
-            className="flex flex-col gap-[13px] mt-[30px]"
             onClick={(event) => onClickCol(event)}
+            className="flex flex-col gap-[13px] tablet:mt-2 mobile:gap-[1px] mini:gap-[0px] bg-red-300 justify-end"
           >
             {line.map((field, idx) => {
               return (
                 <div key={`${index}${idx}`}>
-                  {field === "RED" && <RedMarker />}
-                  {field === "YELLOW" && <YellowMarker />}
+                  {field === "RED" && (
+                    <>
+                      <BigRedMarker
+                        className="mobile:hidden mini:hidden"
+                        viewBox="0 0 70 75"
+                      />
+                      <SmallRedMarker className="hidden tablet:hidden mobile:block mini:block" />
+                    </>
+                  )}
+                  {field === "YELLOW" && (
+                    <>
+                      <BigYellowMarker
+                        className="mobile:hidden mini:hidden"
+                        viewBox="0 0 70 75"
+                      />
+                      <SmallYellowMarker className="hidden tablet:hidden mobile:block mini:block" />
+                    </>
+                  )}
                   {field === null && (
-                    <div className="w-[70px] h-[75px] bg-transparent flex justify-center items-center"></div>
+                    <div className="w-[70px] h-[75px] tablet:w-[70px] tablet:h-[75px] mobile:w-[41px] mobile:h-[46px] mini:w-[42px] mini:h-[46px]" />
                   )}
                 </div>
               );

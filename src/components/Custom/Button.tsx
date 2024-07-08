@@ -6,16 +6,24 @@ interface ButtonData {
   testId?: string;
   children?: React.ReactNode;
   onClick?: (value: React.SetStateAction<boolean>) => void;
+  style: string;
 }
 
-const Button = ({ text, primary, testId, onClick, children }: ButtonData) => {
+const Button = ({
+  text,
+  primary,
+  testId,
+  onClick,
+  children,
+  style,
+}: ButtonData) => {
   return (
     <div className="relative border-[3px] border-black hover:border-purple rounded-[20px]">
       <button
         onClick={() => onClick && onClick((prev: boolean) => !prev)}
-        className={`text-headingM font-bold w-full ${
+        className={`text-headingM font-bold w-full ${style} ${
           primary ? "bg-yellow" : "bg-white"
-        } rounded-[20px] p-5 text-left cursor-pointer shadow-container hover:shadow-hoverContainer transition-all duration-200`}
+        } rounded-[20px] p-5 cursor-pointer shadow-container hover:shadow-hoverContainer transition-all duration-200`}
         id="modal_button"
         data-testid={testId}
       >

@@ -130,7 +130,6 @@ export const gameSlice = createSlice({
       state.currentPlayer = actions.payload.player === "RED" ? "YELLOW" : "RED";
       state.timer = 5;
     },
-    resetAll: () => initialState,
     ticktock: (state) => {
       state.timer -= 1;
     },
@@ -237,11 +236,11 @@ export const gameSlice = createSlice({
       state.winner = null;
       state.timer = 30;
       state.stop = false;
+      state.notMaxLine = initialState.notMaxLine;
     },
   },
 });
 
-export const { drop, reset, resetAll, ticktock, forceDrop, setStop } =
-  gameSlice.actions;
+export const { drop, reset, ticktock, forceDrop, setStop } = gameSlice.actions;
 
 export default gameSlice.reducer;
