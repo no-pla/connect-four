@@ -1,4 +1,3 @@
-import React from "react";
 import Button from "../Custom/Button";
 import { useDispatch } from "react-redux";
 import { toggleModal } from "../../slices/modalSlice";

@@ -1,4 +1,3 @@
-import React from "react";
 import Check from "../../assets/images/icon-check.svg?react";
 
 const RuleModal = ({ onClick }: { onClick: () => void }) => {

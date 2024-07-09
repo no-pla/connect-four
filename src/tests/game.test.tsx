@@ -184,9 +184,10 @@ describe("게임 진행 테스트", () => {
     it.each(testData)(
       "마커가 맨 아래에 떨어지는지 테스트한다.",
       (board, { lineNumber, equal }) => {
-        const dropLine = gameSlice(board, drop({ lineNumber })).board[
-          lineNumber
-        ];
+        const dropLine = gameSlice(
+          board,
+          drop({ lineNumber, player: board.currentPlayer })
+        ).board[lineNumber];
 
         for (let i = 0; i < dropLine.length; i++) {
           if (dropLine[i] !== null) {
@@ -432,15 +433,9 @@ describe("게임 결과 테스트", () => {
           drop({ lineNumber: dropLine, player: currentPlayer })
         );
 
-        console.log(result);
-
         expect(result.winner).not.toBe(null);
       }
     );
-    const verticalWinData: [
-      GameState,
-      { currentPlayer: "RED" | "YELLOW"; dropLine: number }
-    ][] = [];
 
     it("세로 승리 조건을 확인하는지 테스트한다.", () => {
       // 가로 승리 조건 n개와 세로 승리 조건 n개, 대각선 승리 조건 n개, 무승부를 작성.

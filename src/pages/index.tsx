@@ -1,4 +1,3 @@
-import React from "react";
 import Board from "../components/Game/Board";
 import MarkerContainer from "../components/Game/MarkerContainer";
 import BoardHeader from "../components/Game/BoardHeader";

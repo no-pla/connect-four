@@ -1,6 +1,5 @@
-import React from "react";
 import HeaderLogo from "../../assets/images/logo.svg?react";
-import HeaderButton from "../HeaderButton";
+import HeaderButton from "./HeaderButton";
 import { useDispatch } from "react-redux";
 import { reset, setStop } from "../../slices/gameSlice";
 import { toggleModal } from "../../slices/modalSlice";

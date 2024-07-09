@@ -1,11 +1,9 @@
-import React from "react";
-
 const HeaderButton = ({
   text,
   onClick,
 }: {
   text: string;
-  onClick: () => any;
+  onClick: () => void;
 }) => {
   return (
     <button

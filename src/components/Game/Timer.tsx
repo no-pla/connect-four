@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RedTimer from "../../assets/images/turn-background-red.svg?react";
 import YellowTimer from "../../assets/images/turn-background-yellow.svg?react";
@@ -39,6 +38,7 @@ const Timer = () => {
       className={`${
         player === "RED" ? "text-white" : "text-black"
       } relative -top-[60px] laptop:scale-90 mobile:scale-90 mobile:-top-10 z-30 flex justify-center mini:top-[-30px]`}
+      data-testid="timer"
     >
       {player === "RED" ? <RedTimer /> : <YellowTimer />}
       <div className="absolute left-0 top-11 w-full text-center tablet:top-11">
