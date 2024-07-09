@@ -1,10 +1,19 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import gameReducer from "../slices/gameSlice";
 import modalReducer from "../slices/modalSlice";
 
-export default configureStore({
-  reducer: {
-    game: gameReducer,
-    modal: modalReducer,
-  },
+const rootReducer = combineReducers({
+  game: gameReducer,
+  modal: modalReducer,
 });
+
+export function setupStore(preloadedState?: Partial<RootState>) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+}
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type Appstore = ReturnType<typeof setupStore>;
+export type AppDispatch = Appstore["dispatch"];

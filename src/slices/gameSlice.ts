@@ -1,6 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+interface GameState {
+  board: ("RED" | "YELLOW" | null)[][];
+  currentPlayer: "RED" | "YELLOW";
+  markerCount: number;
+  winner: string | null;
+  redWin: number;
+  yellowWin: number;
+  timer: number;
+  stop: boolean;
+  notMaxLine: number[];
+}
+
+const initialState: GameState = {
   board: [
     [null, null, null, null, null, null],
     [null, null, null, null, null, null],
@@ -9,22 +21,29 @@ const initialState = {
     [null, null, null, null, null, null],
     [null, null, null, null, null, null],
     [null, null, null, null, null, null],
-  ] as ("RED" | "YELLOW" | null)[][],
+  ],
   currentPlayer: "RED",
   markerCount: 0,
-  winner: null as string | null,
+  winner: null,
   redWin: 0,
   yellowWin: 0,
-  timer: 5, // 커밋 전에 30초로 바꿔야 함
+  timer: 30,
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
 };
+
+interface ActionsData {
+  payload: {
+    lineNumber: number;
+    player: "RED" | "YELLOW";
+  };
+}
 
 export const gameSlice = createSlice({
   name: "game",
   initialState,
   reducers: {
-    drop: (state, actions) => {
+    drop: (state, actions: ActionsData) => {
       if (state.stop) return;
       if (state.winner !== null) {
         console.warn(`이미 종료된 게임입니다. 승자는 ${state.winner}입니다.`);
@@ -35,14 +54,11 @@ export const gameSlice = createSlice({
         console.warn(
           `${actions.payload.lineNumber + 1} 열은 이미 전부 채워진 열입니다.`
         );
-        return;
       }
+
       let location: null | number = null;
 
-      /**
-       * 만약 선택한 행의 첫 번째 셀이 null이 아니면 리턴.
-       */
-      for (let i = 6; i >= 0; i--) {
+      for (let i = 5; i >= 0; i--) {
         if (state.board[actions.payload.lineNumber][i] === null) {
           state.board[actions.payload.lineNumber][i] =
             state.currentPlayer === "RED" ? "RED" : "YELLOW";
@@ -128,7 +144,7 @@ export const gameSlice = createSlice({
       }
 
       state.currentPlayer = actions.payload.player === "RED" ? "YELLOW" : "RED";
-      state.timer = 5;
+      state.timer = 30;
     },
     ticktock: (state) => {
       state.timer -= 1;
@@ -151,7 +167,6 @@ export const gameSlice = createSlice({
       }
 
       state.markerCount += 1;
-      console.log(state.markerCount);
 
       // 연결 테스트
 
@@ -224,7 +239,7 @@ export const gameSlice = createSlice({
       }
 
       state.currentPlayer = state.currentPlayer === "RED" ? "YELLOW" : "RED";
-      state.timer = 5;
+      state.timer = 30;
     },
     setStop: (state) => {
       state.stop = state.stop === true ? false : true;
@@ -234,6 +249,8 @@ export const gameSlice = createSlice({
       state.currentPlayer = "RED";
       state.markerCount = 0;
       state.winner = null;
+      state.redWin = 0;
+      state.yellowWin = 0;
       state.timer = 30;
       state.stop = false;
       state.notMaxLine = initialState.notMaxLine;
