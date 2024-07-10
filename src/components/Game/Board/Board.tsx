@@ -1,23 +1,28 @@
 import React from "react";
-import LargeFrontBoard from "../../assets/images/board-layer-white-large.svg?react";
-import LargeBackBoard from "../../assets/images/board-layer-black-large.svg?react";
-import SmallFrontBoard from "../../assets/images/board-layer-white-small.svg?react";
-import SmallBackBoard from "../../assets/images/board-layer-black-small.svg?react";
-import Timer from "./Timer";
+import LargeFrontBoard from "../../../assets/images/board-layer-white-large.svg?react";
+import LargeBackBoard from "../../../assets/images/board-layer-black-large.svg?react";
+import SmallFrontBoard from "../../../assets/images/board-layer-white-small.svg?react";
+import SmallBackBoard from "../../../assets/images/board-layer-black-small.svg?react";
+import Timer from "../Timer";
 import { useSelector } from "react-redux";
-import WinnerCard from "./WinnerCard";
+import WinnerCard from "../WinnerCard";
 
-interface GameData {
+interface GameState {
   game: {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
-    markerCounter: number;
-    winner: "RED" | "YELLOW" | null;
+    markerCount: number;
+    winner: "RED" | "YELLOW" | "DRAW" | null;
+    redWin: number;
+    yellowWin: number;
+    timer: number;
+    stop: boolean;
+    notMaxLine: number[] | [];
   };
 }
 
 const Board = ({ children }: { children: React.ReactNode }) => {
-  const winner = useSelector((state: GameData) => state.game.winner);
+  const winner = useSelector((state: GameState) => state.game.winner);
 
   return (
     <section
