@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
+const initialState: {
+  modalOpen: boolean;
+} = {
   modalOpen: false,
 };
 
@@ -9,7 +11,7 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     toggleModal: (state) => {
-      state.modalOpen = state.modalOpen === true ? false : true;
+      state.modalOpen = !state.modalOpen;
     },
   },
 });

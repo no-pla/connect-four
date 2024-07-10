@@ -15,18 +15,18 @@ export function useInterval(
 
   useEffect(() => {
     function tick() {
-      if (savedCallback.current === undefined) return;
+      if (callback === undefined) return;
 
       if (condition) {
-        savedCallback.current();
+        callback();
       } else {
         if (!timeOver) {
-          savedCallback.current(); // 타임오버 시 forceDrop 실행
+          callback(); // 타임오버 시 forceDrop 실행
           setTimeOver(true);
         }
       }
     }
-    if (!isStop.current) {
+    if (!stop) {
       const time = setInterval(tick, 1000);
       setTimeOver(false);
       return () => clearInterval(time);
