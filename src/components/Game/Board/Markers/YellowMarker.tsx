@@ -1,5 +1,5 @@
-import BigYellowMarker from "../../../assets/images/counter-yellow-large.svg?react";
-import SmallYellowMarker from "../../../assets/images/counter-yellow-small.svg?react";
+import BigYellowMarker from "../../../../assets/images/counter-yellow-large.svg?react";
+import SmallYellowMarker from "../../../../assets/images/counter-yellow-small.svg?react";
 
 const YellowMarker = () => {
   return (

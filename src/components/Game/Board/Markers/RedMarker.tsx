@@ -1,5 +1,5 @@
-import BigRedMarker from "../../../assets/images/counter-red-large.svg?react";
-import SmallRedMarker from "../../../assets/images/counter-red-small.svg?react";
+import BigRedMarker from "../../../../assets/images/counter-red-large.svg?react";
+import SmallRedMarker from "../../../../assets/images/counter-red-small.svg?react";
 
 const RedMarker = () => {
   return (
