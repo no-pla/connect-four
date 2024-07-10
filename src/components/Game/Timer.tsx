@@ -4,21 +4,24 @@ import YellowTimer from "../../assets/images/turn-background-yellow.svg?react";
 import { useInterval } from "../../hooks/useInterval";
 import { forceDrop, ticktock } from "../../slices/gameSlice";
 
-interface GameData {
+interface GameState {
   game: {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
-    markerCounter: number;
-    winner: "RED" | "YELLOW" | null;
+    markerCount: number;
+    winner: "RED" | "YELLOW" | "DRAW" | null;
+    redWin: number;
+    yellowWin: number;
     timer: number;
     stop: boolean;
+    notMaxLine: number[] | [];
   };
 }
 
 const Timer = () => {
-  const player = useSelector((state: GameData) => state.game.currentPlayer);
-  const time = useSelector((state: GameData) => state.game.timer);
-  const stop = useSelector((state: GameData) => state.game.stop);
+  const player = useSelector((state: GameState) => state.game.currentPlayer);
+  const time = useSelector((state: GameState) => state.game.timer);
+  const stop = useSelector((state: GameState) => state.game.stop);
   const dispatch = useDispatch();
 
   useInterval(

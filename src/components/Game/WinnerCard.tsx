@@ -1,20 +1,27 @@
 import { useDispatch, useSelector } from "react-redux";
 import { reset } from "../../slices/gameSlice";
-interface GameData {
+
+interface GameState {
   game: {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
-    markerCounter: number;
-    winner: "RED" | "YELLOW" | null;
+    markerCount: number;
+    winner: "RED" | "YELLOW" | "DRAW" | null;
+    redWin: number;
+    yellowWin: number;
+    timer: number;
+    stop: boolean;
+    notMaxLine: number[] | [];
   };
 }
-
 const WinnerCard = () => {
   const dispatch = useDispatch();
-  const winner = useSelector((state: GameData) => state.game.winner);
+  const winner = useSelector((state: GameState) => state.game.winner);
   const resetGame = () => {
     dispatch(reset());
   };
+
+  // TODO: 무승부 처리하기
 
   return (
     <div

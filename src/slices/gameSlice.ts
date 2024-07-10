@@ -9,7 +9,7 @@ interface GameState {
   yellowWin: number;
   timer: number;
   stop: boolean;
-  notMaxLine: number[];
+  notMaxLine: number[] | [];
 }
 
 const initialState: GameState = {
@@ -244,7 +244,7 @@ export const gameSlice = createSlice({
       state.timer = 30;
     },
     setStop: (state) => {
-      state.stop = state.stop === true ? false : true;
+      state.stop = !state.stop;
     },
     reset: (state) => {
       state.board = initialState.board;

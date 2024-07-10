@@ -2,22 +2,23 @@ import { useSelector } from "react-redux";
 import RedIcon from "../../assets/images/player-one.svg?react";
 import YellowIcon from "../../assets/images/player-two.svg?react";
 
-interface GameData {
+interface GameState {
   game: {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
-    markerCounter: number;
-    winner: "RED" | "YELLOW" | null;
-    timer: number;
-    stop: boolean;
+    markerCount: number;
+    winner: "RED" | "YELLOW" | "DRAW" | null;
     redWin: number;
     yellowWin: number;
+    timer: number;
+    stop: boolean;
+    notMaxLine: number[] | [];
   };
 }
 
 const UserScore = ({ user }: { user: "RED" | "YELLOW" }) => {
-  const redScore = useSelector((state: GameData) => state.game.redWin);
-  const yellowScore = useSelector((state: GameData) => state.game.yellowWin);
+  const redScore = useSelector((state: GameState) => state.game.redWin);
+  const yellowScore = useSelector((state: GameState) => state.game.yellowWin);
 
   return (
     <div
