@@ -8,7 +8,11 @@ const Modal = ({
   children: React.ReactNode;
   primary: boolean;
 }) => {
-  return <Container primary={primary}>{children}</Container>;
+  return (
+    <Container aria-modal="true" primary={primary}>
+      {children}
+    </Container>
+  );
 };
 
 export default Modal;

@@ -20,7 +20,7 @@ const LandingBox = () => {
 
   return (
     <Container primary>
-      <div className="px-10 pt-[70px] pb-[60px] s:px-0">
+      <div className="px-10 pt-[70px] pb-[60px] mobile:px-0">
         <Logo
           style={{
             margin: "0 auto",
