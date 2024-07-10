@@ -612,7 +612,7 @@ describe("게임 페이지 테스트", () => {
         const winnerBanner = screen.getByTestId("winner");
         const winUserIndex = winner.winner === "RED" ? 1 : 2;
 
-        expect(winnerBanner).toHaveTextContent(winUserIndex);
+        expect(winnerBanner).toHaveTextContent(String(winUserIndex));
       }
     );
 
