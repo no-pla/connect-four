@@ -4,7 +4,7 @@ interface GameState {
   board: ("RED" | "YELLOW" | null)[][];
   currentPlayer: "RED" | "YELLOW";
   markerCount: number;
-  winner: string | null;
+  winner: "RED" | "YELLOW" | "DRAW" | null;
   redWin: number;
   yellowWin: number;
   timer: number;
@@ -137,10 +137,13 @@ export const gameSlice = createSlice({
               state.yellowWin += 1;
             }
 
-            console.log(`${state.winner}가 승리했습니다.`);
             return;
           }
         }
+      }
+
+      if (state.notMaxLine.length === 0) {
+        state.winner = "DRAW";
       }
 
       state.currentPlayer = actions.payload.player === "RED" ? "YELLOW" : "RED";
@@ -232,7 +235,6 @@ export const gameSlice = createSlice({
               state.yellowWin += 1;
             }
 
-            console.log(`${state.winner}가 승리했습니다.`);
             return;
           }
         }

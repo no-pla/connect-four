@@ -20,36 +20,37 @@ const Board = ({ children }: { children: React.ReactNode }) => {
   const winner = useSelector((state: GameData) => state.game.winner);
 
   return (
-    <>
-      <section className="relative w-full mx-auto flex flex-col justify-center items-center z-20">
-        <div>
-          <div className="pointer-events-none absolute -top-2 z-10 max-w-[632px]">
-            <LargeFrontBoard
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 632 584"
-              className="mobile:hidden mini:hidden"
-            />
-            <SmallFrontBoard
-              preserveAspectRatio="xMidYMid meet"
-              className="hidden mobile:block mini:block"
-            />
-          </div>
-          <div className="absolute">{children}</div>
-          <div className="pointer-events-none">
-            <LargeBackBoard
-              preserveAspectRatio="xMidYMid meet"
-              viewBox="0 0 632 584"
-              className="mobile:hidden mini:hidden"
-            />
-            <SmallBackBoard
-              preserveAspectRatio="xMidYMid meet"
-              className="hidden mobile:block mini:block"
-            />
-          </div>
+    <section
+      data-testid="game-board"
+      className="relative w-full mx-auto flex flex-col justify-center items-center z-20"
+    >
+      <div>
+        <div className="pointer-events-none absolute -top-2 z-10 max-w-[632px]">
+          <LargeFrontBoard
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 632 584"
+            className="mobile:hidden mini:hidden"
+          />
+          <SmallFrontBoard
+            preserveAspectRatio="xMidYMid meet"
+            className="hidden mobile:block mini:block"
+          />
         </div>
-        {winner === null ? <Timer /> : <WinnerCard />}
-      </section>
-    </>
+        <div className="absolute">{children}</div>
+        <div className="pointer-events-none">
+          <LargeBackBoard
+            preserveAspectRatio="xMidYMid meet"
+            viewBox="0 0 632 584"
+            className="mobile:hidden mini:hidden"
+          />
+          <SmallBackBoard
+            preserveAspectRatio="xMidYMid meet"
+            className="hidden mobile:block mini:block"
+          />
+        </div>
+      </div>
+      {winner === null ? <Timer /> : <WinnerCard />}
+    </section>
   );
 };
 
