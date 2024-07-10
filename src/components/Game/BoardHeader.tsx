@@ -1,8 +1,8 @@
-import HeaderLogo from "../../assets/images/logo.svg?react";
-import HeaderButton from "./HeaderButton";
 import { useDispatch } from "react-redux";
-import { reset, setStop } from "../../slices/gameSlice";
-import { toggleModal } from "../../slices/modalSlice";
+import HeaderButton from "./HeaderButton";
+import { reset, setStop } from "slices/gameSlice";
+import { toggleModal } from "slices/modalSlice";
+import HeaderLogo from "assets/logo.svg?react";
 
 const BoardHeader = () => {
   const dispatch = useDispatch();

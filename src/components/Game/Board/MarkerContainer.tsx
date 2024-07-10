@@ -1,7 +1,6 @@
 import React from "react";
-
 import { useDispatch, useSelector } from "react-redux";
-import { drop } from "../../../slices/gameSlice";
+import { drop } from "slices/gameSlice";
 import RedMarker from "./Markers/RedMarker";
 import YellowMarker from "./Markers/YellowMarker";
 import EmptyMarker from "./Markers/EmptyMarker";

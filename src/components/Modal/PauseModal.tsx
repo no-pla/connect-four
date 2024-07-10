@@ -1,7 +1,7 @@
 import Button from "../Custom/Button";
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../slices/modalSlice";
-import { reset, setStop } from "../../slices/gameSlice";
+import { toggleModal } from "slices/modalSlice";
+import { reset, setStop } from "slices/gameSlice";
 
 const PauseModal = () => {
   const dispatch = useDispatch();
@@ -15,6 +15,8 @@ const PauseModal = () => {
     dispatch(toggleModal());
     dispatch(reset());
   };
+
+  // TODO: 수정하기
 
   return (
     <div className="pt-[50px] pb-[54px] px-[34px] text-center">

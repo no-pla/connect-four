@@ -1,9 +1,9 @@
-import BoardFooter from "../components/Game/BoardFooter";
 import { useSelector } from "react-redux";
-import Backdrop from "../components/Modal/Backdrop";
-import Modal from "../components/Modal/Modal";
-import PauseModal from "../components/Modal/PauseModal";
-import GameBoard from "../components/Game/Board/GameBoard";
+import Modal from "components/Modal/Modal";
+import Backdrop from "components/Modal/Backdrop";
+import PauseModal from "components/Modal/PauseModal";
+import GameBoard from "components/Game/Board/GameBoard";
+import BoardFooter from "components/Game/BoardFooter";
 
 const Index = () => {
   const isModalOpen = useSelector(

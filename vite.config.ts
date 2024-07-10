@@ -17,4 +17,11 @@ export default defineConfig({
     setupFiles: "./src/tests/setup.ts",
     include: ["./src/tests/*.tsx"],
   },
+  resolve: {
+    alias: {
+      assets: "/src/assets/images",
+      slices: "/src/slices",
+      components: "/src/components",
+    },
+  },
 });

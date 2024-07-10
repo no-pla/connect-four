@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { reset } from "../../slices/gameSlice";
+import { reset } from "slices/gameSlice";
 
 interface GameState {
   game: {

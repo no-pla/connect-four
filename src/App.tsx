@@ -1,4 +1,4 @@
-import LandingBox from "./components/Custom/LandingBox";
+import LandingBox from "components/Custom/LandingBox";
 
 function App() {
   return (

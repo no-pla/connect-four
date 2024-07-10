@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import gameSlice, { drop, forceDrop, reset } from "../slices/gameSlice";
+import gameSlice, { drop, forceDrop, reset } from "slices/gameSlice";
 import { Provider } from "react-redux";
 import { setupStore } from "../share/store";
 import Index from "../pages";
-import WinnerCard from "../components/Game/WinnerCard";
+import WinnerCard from "components/Game/WinnerCard";
 
 interface GameState {
   board: ("RED" | "YELLOW" | null)[][];

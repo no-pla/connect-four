@@ -6,9 +6,9 @@ import Container from "../Container";
 import Button from "./Button";
 import Modal from "../Modal/Modal";
 import Backdrop from "../Modal/Backdrop";
-import Logo from "../../assets/images/logo.svg?react";
-import PlayWithUser from "../../assets/images/player-vs-player.svg?react";
 import RuleModal from "../Modal/RuleModal";
+import Logo from "assets/logo.svg?react";
+import PlayWithUser from "assets/player-vs-player.svg?react";
 
 const LandingBox = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);

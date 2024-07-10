@@ -1,4 +1,4 @@
-import Check from "../../assets/images/icon-check.svg?react";
+import Check from "assets/icon-check.svg?react";
 
 const RuleModal = ({ onClick }: { onClick: () => void }) => {
   return (
