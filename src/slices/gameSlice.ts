@@ -46,7 +46,11 @@ export const gameSlice = createSlice({
     drop: (state, actions: ActionsData) => {
       if (state.stop) return;
       if (state.winner !== null) {
-        console.warn(`이미 종료된 게임입니다. 승자는 ${state.winner}입니다.`);
+        if (state.winner !== "DRAW") {
+          console.warn(`이미 종료된 게임입니다. 승자는 ${state.winner}입니다.`);
+        } else {
+          console.warn("일시 중지 중인 게임입니다.");
+        }
         return;
       }
 

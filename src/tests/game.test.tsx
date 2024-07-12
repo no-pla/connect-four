@@ -230,27 +230,27 @@ describe("게임 페이지 테스트", () => {
           expect(result.timer).toBe(30);
         }
       );
+
+      const currentPlayer: ("RED" | "YELLOW")[] = ["RED", "YELLOW"];
+
+      it.each(currentPlayer)(
+        "유저가 번갈아 가며 두는지 테스트한다.",
+        (player) => {
+          const result = gameSlice(
+            {
+              ...initialState,
+              currentPlayer: player,
+            },
+            drop({
+              player,
+              lineNumber: 1,
+            })
+          );
+
+          expect(result.currentPlayer).not.toEqual(player);
+        }
+      );
     });
-
-    const currentPlayer: ("RED" | "YELLOW")[] = ["RED", "YELLOW"];
-
-    it.each(currentPlayer)(
-      "유저가 번갈아 가며 두는지 테스트한다.",
-      (player) => {
-        const result = gameSlice(
-          {
-            ...initialState,
-            currentPlayer: player,
-          },
-          drop({
-            player,
-            lineNumber: 1,
-          })
-        );
-
-        expect(result.currentPlayer).not.toEqual(player);
-      }
-    );
   });
 
   describe("게임 결과 테스트", () => {
@@ -523,6 +523,14 @@ describe("게임 페이지 테스트", () => {
           expect(result.winner).toEqual("DRAW");
         }
       );
+    });
+
+    it("무승부 테스트", () => {
+      const drawTestCase = {
+        ...initialState,
+        winner: "DRAW",
+      };
+      expect(drawTestCase.winner).toBe("DRAW");
     });
 
     describe("종료 테스트", () => {
