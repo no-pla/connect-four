@@ -224,7 +224,7 @@ describe("게임 페이지 테스트", () => {
       ];
 
       it.each(reset30sTestCase)(
-        "플레이어가 전환될 때마다, 타이머가 30초로 초기화되는지 테스트한다.",
+        "유저가 전환될 때마다, 타이머가 30초로 초기화되는지 테스트한다.",
         (cases) => {
           const result = gameSlice(cases, forceDrop());
           expect(result.timer).toBe(30);
@@ -235,7 +235,7 @@ describe("게임 페이지 테스트", () => {
     const currentPlayer: ("RED" | "YELLOW")[] = ["RED", "YELLOW"];
 
     it.each(currentPlayer)(
-      "플레이어가 번갈아 가며 두는지 테스트한다.",
+      "유저가 번갈아 가며 두는지 테스트한다.",
       (player) => {
         const result = gameSlice(
           {
@@ -571,7 +571,7 @@ describe("게임 페이지 테스트", () => {
       );
     });
 
-    const winnerMessageTestCaese: GameState[] = [
+    const winnerMessageTestCases: GameState[] = [
       {
         ...initialState,
         board: [
@@ -606,7 +606,7 @@ describe("게임 페이지 테스트", () => {
       },
     ];
 
-    it.each(winnerMessageTestCaese)(
+    it.each(winnerMessageTestCases)(
       "승자 메시지가 올바르게 표시되는지 테스트한다.",
       (winner) => {
         const winnerBanner = screen.getByTestId("winner");

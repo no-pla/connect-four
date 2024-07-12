@@ -3,15 +3,7 @@ import { reset } from "slices/gameSlice";
 
 interface GameState {
   game: {
-    board: ("RED" | "YELLOW" | null)[][];
-    currentPlayer: "RED" | "YELLOW";
-    markerCount: number;
     winner: "RED" | "YELLOW" | "DRAW" | null;
-    redWin: number;
-    yellowWin: number;
-    timer: number;
-    stop: boolean;
-    notMaxLine: number[] | [];
   };
 }
 const WinnerCard = () => {

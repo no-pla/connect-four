@@ -1,6 +1,6 @@
 import React from "react";
 
-interface ButtonData {
+interface ButtonState {
   text: string;
   primary: boolean;
   testId?: string;
@@ -16,7 +16,7 @@ const Button = ({
   onClick,
   children,
   style,
-}: ButtonData) => {
+}: ButtonState) => {
   return (
     <div className="relative border-[3px] border-black hover:border-purple rounded-[20px]">
       <button
