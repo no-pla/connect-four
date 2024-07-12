@@ -10,7 +10,7 @@ const WinnerCard = () => {
   const dispatch = useDispatch();
   const winner = useSelector((state: GameState) => state.game.winner);
   const resetGame = () => {
-    dispatch(reset());
+    dispatch(reset({ winner }));
   };
 
   return (
@@ -22,7 +22,7 @@ const WinnerCard = () => {
         {winner === "YELLOW" && "유저 2"}
       </span>
       <div className={`text-headingL font-bold ${winner === "DRAW" && "pt-2"}`}>
-        무승부
+        {winner === "DRAW" ? "무승부" : "승리"}
       </div>
       <button
         className="bg-darkPurple text-white rounded-full py-2 px-5"

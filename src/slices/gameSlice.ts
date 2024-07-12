@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface GameState {
   board: ("RED" | "YELLOW" | null)[][];
+  firstPlayer: "RED";
   currentPlayer: "RED" | "YELLOW";
   markerCount: number;
   winner: "RED" | "YELLOW" | "DRAW" | null;
@@ -22,6 +23,7 @@ const initialState: GameState = {
     [null, null, null, null, null, null],
     [null, null, null, null, null, null],
   ],
+  firstPlayer: "RED",
   currentPlayer: "RED",
   markerCount: 0,
   winner: null,
@@ -58,14 +60,14 @@ export const gameSlice = createSlice({
         console.warn(
           `${actions.payload.lineNumber + 1} 열은 이미 전부 채워진 열입니다.`
         );
+        return;
       }
 
       let location: null | number = null;
 
       for (let i = 5; i >= 0; i--) {
         if (state.board[actions.payload.lineNumber][i] === null) {
-          state.board[actions.payload.lineNumber][i] =
-            state.currentPlayer === "RED" ? "RED" : "YELLOW";
+          state.board[actions.payload.lineNumber][i] = state.currentPlayer;
           location = i;
           break;
         }
@@ -140,7 +142,8 @@ export const gameSlice = createSlice({
             } else {
               state.yellowWin += 1;
             }
-
+            state.currentPlayer =
+              state.firstPlayer === "RED" ? "YELLOW" : "RED";
             return;
           }
         }
@@ -238,7 +241,8 @@ export const gameSlice = createSlice({
             } else {
               state.yellowWin += 1;
             }
-
+            state.currentPlayer =
+              state.firstPlayer === "RED" ? "YELLOW" : "RED";
             return;
           }
         }
@@ -250,13 +254,12 @@ export const gameSlice = createSlice({
     setStop: (state) => {
       state.stop = !state.stop;
     },
-    reset: (state) => {
+    reset: (state, actions) => {
+      console.log(actions.payload);
       state.board = initialState.board;
-      state.currentPlayer = "RED";
+      state.currentPlayer = state.firstPlayer === "RED" ? "YELLOW" : "RED";
       state.markerCount = 0;
       state.winner = null;
-      state.redWin = 0;
-      state.yellowWin = 0;
       state.timer = 30;
       state.stop = false;
       state.notMaxLine = initialState.notMaxLine;

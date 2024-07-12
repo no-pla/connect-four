@@ -13,7 +13,7 @@ const PauseModal = () => {
 
   const resetGame = () => {
     dispatch(toggleModal());
-    dispatch(reset());
+    dispatch(reset({ winner: "RED" }));
   };
 
   // TODO: 수정하기
@@ -34,7 +34,7 @@ const PauseModal = () => {
           onClick={() => resetGame()}
           style="text-center"
         />
-        <Button text="계속하기" primary={false} style="text-center" />
+        <Button text="메인으로" primary={false} style="text-center" />
       </div>
     </div>
   );
