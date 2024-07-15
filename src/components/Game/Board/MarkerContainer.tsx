@@ -35,7 +35,7 @@ const MarkerContainer = () => {
   };
 
   return (
-    <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:mt-0 mini:mb-10 mini:mt-0 mini:ml-[6px] mini:gap-x-1">
+    <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:-mt-[2px] mini:mb-10 mini:-mt-[2px] mini:ml-[6px] mini:gap-x-1">
       {board.map((line, index) => {
         return (
           <div
