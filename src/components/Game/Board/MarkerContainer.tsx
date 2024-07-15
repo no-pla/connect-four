@@ -9,12 +9,14 @@ interface GameState {
   game: {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
+    connectFour: [] | number[][];
   };
 }
 
 const MarkerContainer = () => {
   const board = useSelector((state: GameState) => state.game.board);
   const player = useSelector((state: GameState) => state.game.currentPlayer);
+  const connectFour = useSelector((state: GameState) => state.game.connectFour);
   const dispatch = useDispatch();
 
   const onClickCol = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +26,12 @@ const MarkerContainer = () => {
 
   const dropMarker = (lineNumber: number) => {
     dispatch(drop({ lineNumber, player }));
+  };
+
+  const emphasizeWinMarker = (row: number, col: number): boolean => {
+    return connectFour.some(
+      (position) => position[0] === row && position[1] === col
+    );
   };
 
   return (
@@ -39,8 +47,12 @@ const MarkerContainer = () => {
             {line.map((field, idx) => {
               return (
                 <div key={`${index}${idx}`}>
-                  {field === "RED" && <RedMarker />}
-                  {field === "YELLOW" && <YellowMarker />}
+                  {field === "RED" && (
+                    <RedMarker win={emphasizeWinMarker(index, idx)} />
+                  )}
+                  {field === "YELLOW" && (
+                    <YellowMarker win={emphasizeWinMarker(index, idx)} />
+                  )}
                   {field === null && <EmptyMarker />}
                 </div>
               );

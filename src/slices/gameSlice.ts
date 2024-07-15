@@ -11,6 +11,7 @@ interface GameState {
   timer: number;
   stop: boolean;
   notMaxLine: number[] | [];
+  connectFour: (number | null)[][];
 }
 
 const initialState: GameState = {
@@ -32,6 +33,7 @@ const initialState: GameState = {
   timer: 30,
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
+  connectFour: [],
 };
 
 interface ActionsData {
@@ -92,7 +94,7 @@ export const gameSlice = createSlice({
 
         // 연결 테스트
         const checkDirection = (dx: number, dy: number) => {
-          let count = 1; // 기존 마커도 추가.
+          const count = [[actions.payload.lineNumber, location]]; // 기존 마커도 추가.
 
           let pnx = actions.payload.lineNumber + dx; // X축 각 방향별로 1칸씩 이동
           let pny = location! + dy; // Y축 각 방향별로 1칸씩 이동
@@ -106,7 +108,7 @@ export const gameSlice = createSlice({
             pny <= 5 &&
             state.board[pnx][pny] === actions.payload.player
           ) {
-            count++;
+            count.push([pnx, pny]);
             pnx += dx;
             pny += dy;
           }
@@ -123,7 +125,7 @@ export const gameSlice = createSlice({
             mny <= 5 &&
             state.board[mnx][mny] === actions.payload.player
           ) {
-            count++;
+            count.push([mnx, mny]);
             mnx -= dx;
             mny -= dy;
           }
@@ -134,7 +136,7 @@ export const gameSlice = createSlice({
         for (const { dx, dy } of movement) {
           const count = checkDirection(dx, dy);
 
-          if (count >= 4) {
+          if (count.length >= 4) {
             state.winner = actions.payload.player;
 
             if (state.winner === "RED") {
@@ -142,6 +144,7 @@ export const gameSlice = createSlice({
             } else {
               state.yellowWin += 1;
             }
+            state.connectFour = count;
             state.currentPlayer =
               state.firstPlayer === "RED" ? "YELLOW" : "RED";
             return;
@@ -263,6 +266,7 @@ export const gameSlice = createSlice({
       state.timer = 30;
       state.stop = false;
       state.notMaxLine = initialState.notMaxLine;
+      state.connectFour = [];
     },
   },
 });
