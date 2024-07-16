@@ -4,13 +4,15 @@ import { reset } from "slices/gameSlice";
 interface GameState {
   game: {
     winner: "RED" | "YELLOW" | "DRAW" | null;
+    firstPlayer: "RED" | "YELLOW";
   };
 }
 const WinnerCard = () => {
   const dispatch = useDispatch();
   const winner = useSelector((state: GameState) => state.game.winner);
+  const firstPlayer = useSelector((state: GameState) => state.game.firstPlayer);
   const resetGame = () => {
-    dispatch(reset({ winner }));
+    dispatch(reset({ firstPlayer }));
   };
 
   return (

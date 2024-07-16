@@ -143,7 +143,7 @@ export const gameSlice = createSlice({
           const count: number[][] = checkDirection(dx, dy);
 
           if (count.length >= 4) {
-            state.winner = actions.payload.currentPlayer;
+            state.winner = actions.payload.currentPlayer!;
 
             if (state.winner === "RED") {
               state.redWin += 1;
@@ -172,7 +172,14 @@ export const gameSlice = createSlice({
     setStop: (state) => {
       state.stop = !state.stop;
     },
-    reset: (state, actions) => {
+    reset: (
+      state,
+      actions: {
+        payload: {
+          firstPlayer?: "RED" | "YELLOW";
+        };
+      }
+    ) => {
       const firstPlayer =
         actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED";
       return {
@@ -180,9 +187,8 @@ export const gameSlice = createSlice({
         redWin: state.redWin,
         yellowWin: state.yellowWin,
         firstPlayer,
-        currentPlayer: state.firstPlayer,
+        currentPlayer: firstPlayer,
       };
-      // TODO: 여기 뭔가 요상함
     },
   },
 });

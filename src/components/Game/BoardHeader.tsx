@@ -16,7 +16,7 @@ const BoardHeader = () => {
     <header className="w-full max-w-[632px] py-[52px] mx-auto flex justify-between items-center relative tablet:py-8 mobile:pb-0 mini:py-[50px]">
       <HeaderButton text="MENU" onClick={() => openModal()} />
       <HeaderLogo className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 mobile:relative mobile:top-0 mobile:left-0 mobile:translate-x-0 mobile:translate-y-0" />
-      <HeaderButton text="RESTART" onClick={() => dispatch(reset())} />
+      <HeaderButton text="RESTART" onClick={() => dispatch(reset({}))} />
     </header>
   );
 };

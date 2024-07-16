@@ -585,7 +585,11 @@ describe("게임 페이지 테스트", () => {
         connectFour: [],
       };
 
-      setupStore().dispatch(reset(previousState.connectFour));
+      setupStore().dispatch(
+        reset({
+          firstPlayer: previousState.firstPlayer,
+        })
+      );
 
       const resetData = setupStore().getState().game;
 
