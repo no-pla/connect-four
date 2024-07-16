@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useInterval } from "../../hooks/useInterval";
-import { forceDrop, ticktock } from "slices/gameSlice";
+import { dropMarker, ticktock } from "slices/gameSlice";
 import RedTimer from "assets/turn-background-red.svg?react";
 import YellowTimer from "assets/turn-background-yellow.svg?react";
 
@@ -23,7 +23,12 @@ const Timer = () => {
       if (time > 0) {
         dispatch(ticktock());
       } else {
-        dispatch(forceDrop());
+        dispatch(
+          dropMarker({
+            type: "FORCE",
+            currentPlayer: player,
+          })
+        );
       }
     },
     time > 0,

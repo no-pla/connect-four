@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { drop } from "slices/gameSlice";
+import { dropMarker } from "slices/gameSlice";
 import RedMarker from "./Markers/RedMarker";
 import YellowMarker from "./Markers/YellowMarker";
 import EmptyMarker from "./Markers/EmptyMarker";
@@ -21,11 +21,17 @@ const MarkerContainer = () => {
 
   const onClickCol = (event: React.MouseEvent<HTMLElement>) => {
     event.stopPropagation();
-    dropMarker(+event.currentTarget.id);
+    drop(+event.currentTarget.id);
   };
 
-  const dropMarker = (lineNumber: number) => {
-    dispatch(drop({ lineNumber, player }));
+  const drop = (lineNumber: number) => {
+    dispatch(
+      dropMarker({
+        type: "NORMAL",
+        lineNumber,
+        currentPlayer: player,
+      })
+    );
   };
 
   const emphasizeWinMarker = (row: number, col: number): boolean => {
