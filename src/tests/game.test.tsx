@@ -244,6 +244,33 @@ describe("게임 페이지 테스트", () => {
         expect(result.currentPlayer).not.toEqual(player);
       }
     );
+
+    const clickTestCase: GameState = {
+      ...initialState,
+      board: [
+        [null, null, null, null, null, null],
+        [null, null, null, null, null, null],
+        [null, null, null, null, null, null],
+        [null, null, null, null, null, null],
+        [null, null, null, "YELLOW", "YELLOW", "YELLOW"],
+        [null, null, null, "RED", "RED", "RED"],
+        ["YELLOW", "RED", "RED", "YELLOW", "YELLOW", "YELLOW"],
+      ],
+      currentPlayer: "YELLOW",
+    };
+
+    it("열이 꽉 찼을 때, 같은 열을 선택해도 플레이어가 바뀌지 않는지 테스트한다.", () => {
+      const result = gameSlice(
+        clickTestCase,
+        dropMarker({
+          type: "NORMAL",
+          currentPlayer: clickTestCase.currentPlayer,
+          lineNumber: 6,
+        })
+      );
+
+      expect(result.currentPlayer).toEqual(clickTestCase.currentPlayer);
+    });
   });
 
   describe("게임 결과 테스트", () => {

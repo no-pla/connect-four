@@ -3,6 +3,7 @@ import React from "react";
 interface ButtonState {
   text: string;
   primary: boolean;
+  secondary?: boolean;
   testId?: string;
   children?: React.ReactNode;
   onClick?: (value: React.SetStateAction<boolean>) => void;
@@ -12,6 +13,7 @@ interface ButtonState {
 const Button = ({
   text,
   primary,
+  secondary,
   testId,
   onClick,
   children,
@@ -23,7 +25,9 @@ const Button = ({
         onClick={() => onClick && onClick((prev: boolean) => !prev)}
         className={`text-headingM font-bold w-full ${style} ${
           primary ? "bg-yellow" : "bg-white"
-        } rounded-[20px] p-5 cursor-pointer shadow-container hover:shadow-hoverContainer transition-all duration-200`}
+        } rounded-[20px] p-5 cursor-pointer shadow-container hover:shadow-hoverContainer transition-all duration-200 ${
+          secondary && "bg-red text-white"
+        }`}
         id="modal_button"
         data-testid={testId}
       >
