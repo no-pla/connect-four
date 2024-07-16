@@ -68,6 +68,8 @@ export const gameSlice = createSlice({
         lineNumber = actions.payload.lineNumber;
       }
 
+      if (state.board[lineNumber!][0] !== null) return;
+
       let location: null | number = null;
 
       for (let i = 5; i >= 0; i--) {
@@ -82,6 +84,7 @@ export const gameSlice = createSlice({
         state.notMaxLine = state.notMaxLine.filter(
           (lineNumber) => lineNumber !== actions.payload.lineNumber
         );
+        return;
       }
 
       state.markerCount += 1;
