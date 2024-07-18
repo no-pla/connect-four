@@ -19,21 +19,22 @@ const Button = ({
   children,
   style,
 }: ButtonState) => {
+  const bgColor = primary
+    ? "bg-yellow"
+    : secondary
+    ? "bg-red text-white"
+    : "bg-white";
+
   return (
-    <div className="relative border-[3px] border-black hover:border-purple rounded-[20px]">
+    <div className="relative">
       <button
-        onClick={() => onClick && onClick((prev: boolean) => !prev)}
-        className={`text-headingM font-bold w-full ${style} ${
-          primary ? "bg-yellow" : "bg-white"
-        } rounded-[20px] p-5 cursor-pointer shadow-container hover:shadow-hoverContainer transition-all duration-200 ${
-          secondary && "bg-red text-white"
-        }`}
-        id="modal_button"
         data-testid={testId}
+        onClick={() => onClick && onClick((prev: boolean) => !prev)}
+        className={`p-5 rounded-[20px] w-full ${bgColor} text-headingM font-bold cursor-pointer normal-border hover:border-shadow-animation ${style}`}
       >
         {text}
       </button>
-      <div className="absolute top-1/2 -translate-y-1/2 right-4 z-0 pointer-events-none	">
+      <div className="absolute top-1/2 -translate-y-1/2 right-4 z-0 pointer-events-none">
         {children}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import Check from "assets/icon-check.svg?react";
+import CheckSvg from "components/Custom/CheckSvg";
 
 const RuleModal = ({ onClick }: { onClick: () => void }) => {
   return (
@@ -39,10 +39,10 @@ const RuleModal = ({ onClick }: { onClick: () => void }) => {
       </div>
       <button
         data-testid="modal-close-button"
-        className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-0 translate-y-1/2 left-1/2 -translate-x-1/2 cursor-pointer rounded-full"
         onClick={() => onClick()}
       >
-        <Check />
+        <CheckSvg />
       </button>
     </div>
   );

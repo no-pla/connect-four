@@ -84,7 +84,6 @@ export const gameSlice = createSlice({
         state.notMaxLine = state.notMaxLine.filter(
           (lineNumber) => lineNumber !== actions.payload.lineNumber
         );
-        return;
       }
 
       state.markerCount += 1;

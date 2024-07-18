@@ -11,7 +11,7 @@ const Backdrop = ({ children, primary }: ModalState) => {
     <div
       className={`absolute top-0 left-0 h-screen w-screen ${
         primary && "bg-backdrop"
-      } z-20 flex justify-center items-center`}
+      } z-20 flex-center`}
     >
       {children}
     </div>,

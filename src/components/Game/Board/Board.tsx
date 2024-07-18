@@ -19,7 +19,7 @@ const Board = ({ children }: { children: React.ReactNode }) => {
   return (
     <section
       data-testid="game-board"
-      className="relative w-full mx-auto flex flex-col justify-center items-center z-20"
+      className="relative w-full mx-auto flex-center flex-col z-20"
     >
       <div>
         <div className="pointer-events-none absolute -top-2 z-10 max-w-[632px]">
