@@ -15,9 +15,9 @@ const CheckSvg = () => {
         <g
           id="Designs"
           stroke="none"
-          stroke-width="1"
+          strokeWidth="1"
           fill="none"
-          fill-rule="evenodd"
+          fillRule="evenodd"
         >
           <g id="icon-check">
             <circle
@@ -44,7 +44,7 @@ const CheckSvg = () => {
             <polyline
               id="Path"
               stroke="#FFFFFF"
-              stroke-width="3"
+              strokeWidth="3"
               points="20 34.5819497 30.2640104 44.84596 50.1099704 25"
             ></polyline>
           </g>
