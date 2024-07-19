@@ -38,7 +38,7 @@ const LandingBox = () => {
           <Button
             text="게임 규칙"
             primary={false}
-            onClick={setOpenModal}
+            onClick={toggleModal}
             testId="modal-open-button"
             style="text-left"
           />

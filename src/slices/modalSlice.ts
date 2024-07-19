@@ -13,9 +13,10 @@ export const modalSlice = createSlice({
     toggleModal: (state) => {
       state.modalOpen = !state.modalOpen;
     },
+    resetModal: () => initialState,
   },
 });
 
-export const { toggleModal } = modalSlice.actions;
+export const { toggleModal, resetModal } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -189,9 +189,11 @@ export const gameSlice = createSlice({
 
       return newGameState;
     },
+    resetAll: () => initialState,
   },
 });
 
-export const { dropMarker, reset, ticktock, setStop } = gameSlice.actions;
+export const { dropMarker, reset, ticktock, setStop, resetAll } =
+  gameSlice.actions;
 
 export default gameSlice.reducer;
