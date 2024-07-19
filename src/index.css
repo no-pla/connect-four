@@ -30,10 +30,4 @@
     border: 4px black solid;
     box-shadow: 0 10px 0px 0 rgba(0, 0, 0);
   }
-  .border-shadow-animation {
-    border: 4px #7945ff solid;
-    box-shadow: 0 10px 0px 0 #5c2dd5;
-    transition: all;
-    transition-duration: 200s;
-  }
 }

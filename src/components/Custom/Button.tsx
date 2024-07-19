@@ -6,7 +6,7 @@ interface ButtonState {
   secondary?: boolean;
   testId?: string;
   children?: React.ReactNode;
-  onClick?: (value: React.SetStateAction<boolean>) => void;
+  onClick?: () => void;
   style: string;
 }
 
@@ -29,8 +29,8 @@ const Button = ({
     <div className="relative">
       <button
         data-testid={testId}
-        onClick={() => onClick && onClick((prev: boolean) => !prev)}
-        className={`p-5 rounded-[20px] w-full ${bgColor} text-headingM font-bold cursor-pointer normal-border hover:border-shadow-animation ${style}`}
+        onClick={() => onClick && onClick()}
+        className={`p-5 rounded-[20px] w-full ${bgColor} text-headingM font-bold cursor-pointer border-[4px] border-black shadow-container hover:border-darkPurple hover:shadow-hoverContainer ${style}`}
       >
         {text}
       </button>
