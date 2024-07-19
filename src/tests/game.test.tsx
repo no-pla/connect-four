@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { setupStore } from "../share/store";
 import Index from "../pages";
 import WinnerCard from "components/Game/WinnerCard";
+import MarkerContainer from "components/Game/Board/MarkerContainer";
 
 interface GameState {
   board: ("RED" | "YELLOW" | null)[][];
@@ -355,7 +356,6 @@ describe("게임 페이지 테스트", () => {
               lineNumber: dropLine,
             })
           );
-
           expect(result.winner).toEqual(currentPlayer);
         }
       );
@@ -585,38 +585,28 @@ describe("게임 페이지 테스트", () => {
         connectFour: [],
       };
 
-      setupStore().dispatch(
+      const resetData = gameSlice(
+        previousState,
         reset({
           firstPlayer: previousState.firstPlayer,
         })
       );
 
-      const resetData = setupStore().getState().game;
-
-      expect(resetData.currentPlayer).not.toEqual(previousState.firstPlayer);
-      expect(resetData.board).toEqual(initialState.board);
-      expect(resetData.currentPlayer).toBe(initialState.currentPlayer);
+      expect(resetData.board).toStrictEqual(initialState.board);
+      expect(resetData.connectFour).toStrictEqual(initialState.connectFour);
+      expect(resetData.currentPlayer).toBe(resetData.firstPlayer);
       expect(resetData.firstPlayer).not.toBe(previousState.firstPlayer);
       expect(resetData.markerCount).toBe(initialState.markerCount);
-      expect(resetData.winner).toBe(initialState.winner);
-      expect(resetData.redWin).toBe(initialState.redWin);
-      expect(resetData.yellowWin).toBe(initialState.yellowWin);
-      expect(resetData.timer).toBe(initialState.timer);
+      expect(resetData.notMaxLine).toStrictEqual(initialState.notMaxLine);
+      expect(resetData.redWin).toBe(previousState.redWin);
+      expect(resetData.yellowWin).toBe(previousState.yellowWin);
       expect(resetData.stop).toBe(initialState.stop);
-      expect(resetData.notMaxLine).toEqual(initialState.notMaxLine);
+      expect(resetData.timer).toBe(initialState.timer);
     });
   });
 
-  describe.skip("UI 테스트", () => {
-    beforeEach(() => {
-      render(
-        <Provider store={setupStore()}>
-          <WinnerCard />
-        </Provider>
-      );
-    });
-
-    const winnerMessageTestCases: GameState[] = [
+  describe("UI 테스트", () => {
+    const winnerTestCases: GameState[] = [
       {
         ...initialState,
         board: [
@@ -626,13 +616,18 @@ describe("게임 페이지 테스트", () => {
           [null, null, null, null, null, null],
           [null, null, null, null, null, null],
           [null, null, null, "RED", "RED", "RED"],
-          [null, null, "YELLOW", "YELLOW", "YELLOW", "YELLOW"],
+          [null, null, "RED", "YELLOW", "YELLOW", "YELLOW"],
         ],
         currentPlayer: "RED",
         markerCount: 7,
         notMaxLine: [0, 1, 2, 3, 4, 5, 6],
-        winner: "YELLOW",
-        connectFour: [],
+        winner: "RED",
+        connectFour: [
+          [1, 4],
+          [2, 4],
+          [3, 4],
+          [4, 4],
+        ],
       },
       {
         ...initialState,
@@ -649,54 +644,100 @@ describe("게임 페이지 테스트", () => {
         markerCount: 9,
         notMaxLine: [0, 1, 2, 3, 4, 5, 6],
         winner: "YELLOW",
-        connectFour: [],
+        connectFour: [
+          [0, 1],
+          [1, 1],
+          [2, 1],
+          [3, 1],
+        ],
       },
+      { ...initialState, winner: "DRAW" },
     ];
 
-    it.each(winnerMessageTestCases)(
+    it.each(winnerTestCases)(
       "승자 메시지가 올바르게 표시되는지 테스트한다.",
       (cases) => {
-        const winnerBanner = screen.getByTestId("winner");
-        const winUserIndex = cases.winner === "RED" ? 1 : 2;
-
-        gameSlice(
-          cases,
-          dropMarker({
-            type: "NORMAL",
-            lineNumber: 0,
-            currentPlayer: cases.currentPlayer,
-          })
+        render(
+          <Provider
+            store={setupStore({
+              game: cases,
+            })}
+          >
+            <WinnerCard />
+          </Provider>
         );
+
+        const winnerBanner = screen.getByTestId("winner");
+        const winUserIndex =
+          cases.winner === "RED" ? 1 : cases.winner === "YELLOW" ? 2 : "";
 
         expect(winnerBanner).toHaveTextContent(String(winUserIndex));
       }
     );
 
-    const winMarker = [
-      [
-        [1, 4],
-        [2, 4],
-        [3, 4],
-        [4, 4],
-      ],
-      [
-        [0, 1],
-        [1, 1],
-        [2, 1],
-        [3, 1],
-      ],
+    const winnerEmphasizeTestCases: GameState[] = [
+      {
+        ...initialState,
+        board: [
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, "RED", "RED", "RED", "RED"],
+          [null, "YELLOW", "RED", "YELLOW", "YELLOW", "YELLOW"],
+        ],
+        currentPlayer: "RED",
+        markerCount: 8,
+        notMaxLine: [0, 1, 2, 3, 4, 5, 6],
+        winner: "RED",
+        connectFour: [
+          [5, 5],
+          [5, 4],
+          [5, 3],
+          [5, 2],
+        ],
+      },
+      {
+        ...initialState,
+        board: [
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, null],
+          [null, null, null, null, null, "RED"],
+          [null, null, null, null, null, "YELLOW"],
+          [null, null, null, null, null, "YELLOW"],
+          [null, null, null, null, null, "YELLOW"],
+          [null, "RED", "RED", "YELLOW", "RED", "YELLOW"],
+        ],
+        currentPlayer: "RED",
+        markerCount: 8,
+        notMaxLine: [0, 1, 2, 3, 4, 5, 6],
+        winner: "RED",
+        connectFour: [
+          [6, 5],
+          [5, 5],
+          [4, 5],
+          [3, 5],
+        ],
+      },
     ];
 
-    it.skip.each(winMarker)(
+    it.each(winnerEmphasizeTestCases)(
       "승리 시 마커가 시각적으로 강조되는지 테스트한다.",
-      () => {
-        expect(null).toBe(undefined);
+      (cases) => {
+        const { getAllByTestId } = render(
+          <Provider
+            store={setupStore({
+              game: cases,
+            })}
+          >
+            <MarkerContainer />
+          </Provider>
+        );
+        const connectFour = getAllByTestId("emphasizeMarker");
+
+        expect(connectFour.length).toBe(4);
       }
     );
   });
-
-  describe.skip("모달 테스트", () => {});
 });
-
-// TODO: 테스트 케이스 수정
-// ! 데이터 로컬 스토리지에 저장

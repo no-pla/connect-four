@@ -179,15 +179,15 @@ export const gameSlice = createSlice({
         };
       }
     ) => {
-      const firstPlayer =
-        actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED";
-      return {
+      const newGameState: GameState = {
         ...initialState,
         redWin: state.redWin,
         yellowWin: state.yellowWin,
-        firstPlayer,
-        currentPlayer: firstPlayer,
+        firstPlayer: actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED",
+        currentPlayer: actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED",
       };
+
+      return newGameState;
     },
   },
 });
