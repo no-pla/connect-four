@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { render, screen } from "@testing-library/react";
-import LandingBox from "../components/LandingBox";
-import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
+import LandingBox from "components/Custom/LandingBox";
 
 describe("랜딩 페이지 테스트", () => {
   describe("요소 랜더링 테스트", () => {

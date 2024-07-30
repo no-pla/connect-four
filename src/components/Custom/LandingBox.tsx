@@ -1,17 +1,22 @@
 /// <reference types="vite-plugin-svgr/client" />
 
 import { useState } from "react";
-import Logo from "../assets/images/logo.svg?react";
-import PlayWithUser from "../assets/images/player-vs-player.svg?react";
-import Button from "./Button";
-import Container from "./Container";
-import Backdrop from "./Modal/Backdrop";
-import Modal from "./Modal/Modal";
 import { useNavigate } from "react-router-dom";
+import Container from "../Container";
+import Button from "./Button";
+import Modal from "../Modal/Modal";
+import Backdrop from "../Modal/Backdrop";
+import RuleModal from "../Modal/RuleModal";
+import Logo from "assets/logo.svg?react";
+import PlayWithUser from "assets/player-vs-player.svg?react";
 
 const LandingBox = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const navigate = useNavigate();
+
+  const toggleModal = () => {
+    setOpenModal((prev) => !prev);
+  };
 
   return (
     <Container primary>
@@ -26,20 +31,24 @@ const LandingBox = () => {
             text="유저와 플레이"
             primary
             onClick={() => navigate("/game")}
+            style="text-left"
           >
             <PlayWithUser />
           </Button>
           <Button
             text="게임 규칙"
             primary={false}
-            onClick={setOpenModal}
+            onClick={toggleModal}
             testId="modal-open-button"
+            style="text-left"
           />
         </div>
       </div>
       {openModal && (
         <Backdrop primary={false}>
-          <Modal closeModal={setOpenModal} />
+          <Modal primary={false}>
+            <RuleModal onClick={() => toggleModal()} />
+          </Modal>
         </Backdrop>
       )}
     </Container>
