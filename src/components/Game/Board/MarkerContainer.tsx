@@ -4,6 +4,7 @@ import { dropMarker } from "slices/gameSlice";
 import RedMarker from "./Markers/RedMarker";
 import YellowMarker from "./Markers/YellowMarker";
 import EmptyMarker from "./Markers/EmptyMarker";
+import { emphasizeColumn } from "slices/emphasizeSlice";
 
 interface GameState {
   game: {
@@ -40,6 +41,10 @@ const MarkerContainer = () => {
     );
   };
 
+  const onHoverColumn = (index: number) => {
+    dispatch(emphasizeColumn({ columnNumber: index }));
+  };
+
   return (
     <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:-mt-[2px] mini:mb-10 mini:-mt-[2px] mini:ml-[6px] mini:gap-x-1">
       {board.map((line, index) => {
@@ -48,6 +53,7 @@ const MarkerContainer = () => {
             key={index}
             id={index.toString()}
             onClick={(event) => onClickCol(event)}
+            onMouseEnter={() => onHoverColumn(index)}
             className="flex flex-col gap-[13px] tablet:mt-2 mobile:gap-[1px] mini:gap-[0px] bg-red-300 justify-end"
           >
             {line.map((field, idx) => {

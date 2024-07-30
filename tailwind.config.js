@@ -29,7 +29,7 @@ export default {
       mobile: { max: "670px", min: "375px" },
       tablet: { max: "768px", min: "671px" },
       laptop: { max: "1024px", min: "769px" },
-      desktop: { max: "1440px" },
+      desktop: { max: "1440px", min: "1025px" },
     },
   },
   plugins: [],
