@@ -100,6 +100,13 @@ export const gameSlice = createSlice({
         ];
 
         // 연결 테스트
+
+        /**
+         * @description 방향 벡터를 이용하여 최근에 둔 마커를 기준으로 가로/세로/대각선을 양방향으로 검사한다.
+         * @param dx
+         * @param dy
+         * @returns
+         */
         const checkDirection = (dx: number, dy: number): number[][] => {
           const count = [[lineNumber!, location!]]; // 기존 마커도 추가.
 
@@ -107,8 +114,6 @@ export const gameSlice = createSlice({
           let pny = location! + dy; // Y축 각 방향별로 1칸씩 이동
 
           while (
-            // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
-            // 만약 마커가 보드를 넘어갈 경우, 종료.
             pnx >= 0 &&
             pny >= 0 &&
             pnx <= 6 &&
@@ -124,8 +129,6 @@ export const gameSlice = createSlice({
           let mny = location! - dy; // Y축 각 방향별로 1칸씩 이동
 
           while (
-            // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
-            // 만약 마커가 보드를 넘어갈 경우, 종료.
             mnx >= 0 &&
             mny >= 0 &&
             mnx <= 6 &&

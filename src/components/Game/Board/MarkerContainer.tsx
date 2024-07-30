@@ -65,6 +65,12 @@ const MarkerContainer = () => {
     }
   };
 
+  /**
+   * @description connectFour 배열에 연결된 배열의 좌표를 받아오면 해당 인덱스들을 가진 마커에 true를 전달하여 강조를 한다.
+   * @param row
+   * @param col
+   * @returns
+   */
   const emphasizeWinMarker = (row: number, col: number): boolean => {
     return connectFour.some(
       (position) => position[0] === row && position[1] === col
@@ -78,6 +84,11 @@ const MarkerContainer = () => {
   };
 
   useEffect(() => {
+    /**
+     * @description 키보드 다운이 발생할 때마다 실행되어 선택한 마커의 위치나, 마커를 떨어뜨리는 로직을 실행한다.
+     * @param event
+     * @returns void
+     */
     function handleKeyDown(event: KeyboardEvent) {
       const keyType = event.key;
 
