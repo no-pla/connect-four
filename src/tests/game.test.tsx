@@ -472,7 +472,7 @@ describe("게임 페이지 테스트", () => {
               [null, null, null, null, null, "RED"],
               [null, null, null, null, null, null],
             ],
-            currentPlayer: "YELLOW",
+            currentPlayer: "RED",
             markerCount: 9,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
@@ -487,7 +487,7 @@ describe("게임 페이지 테스트", () => {
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: currentPlayer,
+              currentPlayer: cases.currentPlayer,
               lineNumber: dropLine,
             })
           );

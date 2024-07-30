@@ -54,15 +54,12 @@ const MarkerContainer = () => {
   ) => {
     if (!colIndex.current) return;
 
-    if (
-      (lineNumber <= 0 && direction === "LEFT") ||
-      (lineNumber >= 6 && direction === "RIGHT")
-    ) {
-      return;
-    } else if (direction === "LEFT") {
+    if (direction === "LEFT") {
+      if (lineNumber <= 0) return;
       const index = (colIndex.current.idx -= 1);
       dispatch(emphasizeColumn({ columnNumber: index }));
     } else {
+      if (lineNumber >= 6) return;
       const index = (colIndex.current.idx += 1);
       dispatch(emphasizeColumn({ columnNumber: index }));
     }
