@@ -19,6 +19,7 @@ interface GameState {
   stop: boolean;
   notMaxLine: number[] | [];
   connectFour: (number | null)[][];
+  left: string;
 }
 
 const initialState: GameState = {
@@ -41,6 +42,7 @@ const initialState: GameState = {
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
   connectFour: [],
+  left: "left-[30px]",
 };
 
 describe("게임 페이지 테스트", () => {

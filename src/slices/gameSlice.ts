@@ -12,6 +12,7 @@ interface GameState {
   stop: boolean;
   notMaxLine: number[] | [];
   connectFour: (number | null)[][];
+  left: string;
 }
 
 const initialState: GameState = {
@@ -34,6 +35,7 @@ const initialState: GameState = {
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
   connectFour: [],
+  left: "left-[30px]",
 };
 
 interface ActionsData {
@@ -111,7 +113,7 @@ export const gameSlice = createSlice({
             pny >= 0 &&
             pnx <= 6 &&
             pny <= 5 &&
-            state.board[pnx][pny] === actions.payload.currentPlayer
+            state.board[pnx][pny] === state.currentPlayer
           ) {
             count.push([pnx, pny]);
             pnx += dx;
@@ -128,7 +130,7 @@ export const gameSlice = createSlice({
             mny >= 0 &&
             mnx <= 6 &&
             mny <= 5 &&
-            state.board[mnx][mny] === actions.payload.currentPlayer
+            state.board[mnx][mny] === state.currentPlayer
           ) {
             count.push([mnx, mny]);
             mnx -= dx;
@@ -150,8 +152,6 @@ export const gameSlice = createSlice({
               state.yellowWin += 1;
             }
             state.connectFour = count;
-            state.currentPlayer =
-              state.firstPlayer === "RED" ? "YELLOW" : "RED";
             return;
           }
         }
@@ -161,8 +161,8 @@ export const gameSlice = createSlice({
         state.winner = "DRAW";
       }
 
-      state.currentPlayer =
-        actions.payload.currentPlayer === "RED" ? "YELLOW" : "RED";
+      state.currentPlayer = state.currentPlayer === "RED" ? "YELLOW" : "RED";
+
       state.timer = 30;
     },
     ticktock: (state) => {
@@ -190,10 +190,52 @@ export const gameSlice = createSlice({
       return newGameState;
     },
     resetAll: () => initialState,
+    emphasizeColumn: (
+      state,
+      actions: {
+        payload: {
+          columnNumber: number;
+        };
+      }
+    ) => {
+      if (state.stop || state.winner !== null) return;
+
+      const colNum = actions.payload.columnNumber;
+
+      switch (colNum) {
+        case 0:
+          state.left = "left-[30px]";
+          break;
+        case 1:
+          state.left = "left-[120px]";
+          break;
+        case 2:
+          state.left = "left-[210px]";
+          break;
+        case 3:
+          state.left = "left-[300px]";
+          break;
+        case 4:
+          state.left = "left-[385px]";
+          break;
+        case 5:
+          state.left = "left-[475px]";
+          break;
+        default:
+          state.left = "left-[560px]";
+          break;
+      }
+    },
   },
 });
 
-export const { dropMarker, reset, ticktock, setStop, resetAll } =
-  gameSlice.actions;
+export const {
+  dropMarker,
+  reset,
+  ticktock,
+  setStop,
+  resetAll,
+  emphasizeColumn,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;
