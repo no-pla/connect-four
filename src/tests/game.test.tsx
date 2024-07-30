@@ -19,6 +19,7 @@ interface GameState {
   stop: boolean;
   notMaxLine: number[] | [];
   connectFour: (number | null)[][];
+  left: string;
 }
 
 const initialState: GameState = {
@@ -41,6 +42,7 @@ const initialState: GameState = {
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
   connectFour: [],
+  left: "left-[30px]",
 };
 
 describe("게임 페이지 테스트", () => {
@@ -470,7 +472,7 @@ describe("게임 페이지 테스트", () => {
               [null, null, null, null, null, "RED"],
               [null, null, null, null, null, null],
             ],
-            currentPlayer: "YELLOW",
+            currentPlayer: "RED",
             markerCount: 9,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
@@ -485,7 +487,7 @@ describe("게임 페이지 테스트", () => {
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: currentPlayer,
+              currentPlayer: cases.currentPlayer,
               lineNumber: dropLine,
             })
           );

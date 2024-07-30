@@ -12,6 +12,7 @@ interface GameState {
   stop: boolean;
   notMaxLine: number[] | [];
   connectFour: (number | null)[][];
+  left: string;
 }
 
 const initialState: GameState = {
@@ -34,6 +35,7 @@ const initialState: GameState = {
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
   connectFour: [],
+  left: "left-[30px]",
 };
 
 interface ActionsData {
@@ -98,6 +100,13 @@ export const gameSlice = createSlice({
         ];
 
         // 연결 테스트
+
+        /**
+         * @description 방향 벡터를 이용하여 최근에 둔 마커를 기준으로 가로/세로/대각선을 양방향으로 검사한다.
+         * @param dx
+         * @param dy
+         * @returns
+         */
         const checkDirection = (dx: number, dy: number): number[][] => {
           const count = [[lineNumber!, location!]]; // 기존 마커도 추가.
 
@@ -105,13 +114,11 @@ export const gameSlice = createSlice({
           let pny = location! + dy; // Y축 각 방향별로 1칸씩 이동
 
           while (
-            // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
-            // 만약 마커가 보드를 넘어갈 경우, 종료.
             pnx >= 0 &&
             pny >= 0 &&
             pnx <= 6 &&
             pny <= 5 &&
-            state.board[pnx][pny] === actions.payload.currentPlayer
+            state.board[pnx][pny] === state.currentPlayer
           ) {
             count.push([pnx, pny]);
             pnx += dx;
@@ -122,13 +129,11 @@ export const gameSlice = createSlice({
           let mny = location! - dy; // Y축 각 방향별로 1칸씩 이동
 
           while (
-            // 각 좌표가 보드 내에 있고, 해당 위치에 있는 마커가 현재 유저의 마커와 같은 색상의 마커인지 확인한다.
-            // 만약 마커가 보드를 넘어갈 경우, 종료.
             mnx >= 0 &&
             mny >= 0 &&
             mnx <= 6 &&
             mny <= 5 &&
-            state.board[mnx][mny] === actions.payload.currentPlayer
+            state.board[mnx][mny] === state.currentPlayer
           ) {
             count.push([mnx, mny]);
             mnx -= dx;
@@ -150,8 +155,6 @@ export const gameSlice = createSlice({
               state.yellowWin += 1;
             }
             state.connectFour = count;
-            state.currentPlayer =
-              state.firstPlayer === "RED" ? "YELLOW" : "RED";
             return;
           }
         }
@@ -161,8 +164,8 @@ export const gameSlice = createSlice({
         state.winner = "DRAW";
       }
 
-      state.currentPlayer =
-        actions.payload.currentPlayer === "RED" ? "YELLOW" : "RED";
+      state.currentPlayer = state.currentPlayer === "RED" ? "YELLOW" : "RED";
+
       state.timer = 30;
     },
     ticktock: (state) => {
@@ -190,10 +193,52 @@ export const gameSlice = createSlice({
       return newGameState;
     },
     resetAll: () => initialState,
+    emphasizeColumn: (
+      state,
+      actions: {
+        payload: {
+          columnNumber: number;
+        };
+      }
+    ) => {
+      if (state.stop || state.winner !== null) return;
+
+      const colNum = actions.payload.columnNumber;
+
+      switch (colNum) {
+        case 0:
+          state.left = "left-[30px]";
+          break;
+        case 1:
+          state.left = "left-[120px]";
+          break;
+        case 2:
+          state.left = "left-[210px]";
+          break;
+        case 3:
+          state.left = "left-[300px]";
+          break;
+        case 4:
+          state.left = "left-[385px]";
+          break;
+        case 5:
+          state.left = "left-[475px]";
+          break;
+        default:
+          state.left = "left-[560px]";
+          break;
+      }
+    },
   },
 });
 
-export const { dropMarker, reset, ticktock, setStop, resetAll } =
-  gameSlice.actions;
+export const {
+  dropMarker,
+  reset,
+  ticktock,
+  setStop,
+  resetAll,
+  emphasizeColumn,
+} = gameSlice.actions;
 
 export default gameSlice.reducer;
