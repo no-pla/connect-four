@@ -1,5 +1,3 @@
-import React from "react";
-
 const CheckSvg = () => {
   return (
     <div className="group">

@@ -1,4 +1,3 @@
-import React from "react";
 import { useSelector } from "react-redux";
 import RedEmphasizeMarker from "assets/marker-red.svg?react";
 import YellowEmphasizeMarker from "assets/marker-yellow.svg?react";
