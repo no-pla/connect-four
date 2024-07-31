@@ -24,27 +24,21 @@ const CheckSvg = () => {
               cy="35"
               r="35"
               className="fill-black group-hover:fill-purple"
-            ></circle>
+            />
             <circle
               id="Oval-Copy-38"
               cx="35"
               cy="40"
               r="35"
               className="fill-black group-hover:fill-purple"
-            ></circle>
-            <circle
-              id="Oval-Copy-39"
-              fill="#FD6687"
-              cx="35"
-              cy="35"
-              r="32"
-            ></circle>
+            />
+            <circle id="Oval-Copy-39" fill="#FD6687" cx="35" cy="35" r="32" />
             <polyline
               id="Path"
               stroke="#FFFFFF"
               strokeWidth="3"
               points="20 34.5819497 30.2640104 44.84596 50.1099704 25"
-            ></polyline>
+            />
           </g>
         </g>
       </svg>

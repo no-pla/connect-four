@@ -33,7 +33,7 @@ const Index = () => {
       <BoardFooter />
       {isModalOpen && (
         <Backdrop primary>
-          <Modal primary={true}>
+          <Modal primary>
             <PauseModal />
           </Modal>
         </Backdrop>
