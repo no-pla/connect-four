@@ -235,6 +235,3 @@ export const {
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
-
-// TODO: 키보드로 조작 시 맨 왼쪽으로 이동되지 않음. / 승리자 판단이 안됨 << 아니 승자가 2인데 1로 판정됨
-//
