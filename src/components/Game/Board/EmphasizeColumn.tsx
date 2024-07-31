@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import RedEmphasizeMarker from "assets/marker-red.svg?react";
 import YellowEmphasizeMarker from "assets/marker-yellow.svg?react";
+import { useSelector } from "react-redux";
 
 interface GameState {
   game: {

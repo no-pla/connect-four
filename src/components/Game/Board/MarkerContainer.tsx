@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { dropMarker, emphasizeColumn } from "slices/gameSlice";
+import EmptyMarker from "./Markers/EmptyMarker";
 import RedMarker from "./Markers/RedMarker";
 import YellowMarker from "./Markers/YellowMarker";
-import EmptyMarker from "./Markers/EmptyMarker";
 
 interface GameState {
   game: {

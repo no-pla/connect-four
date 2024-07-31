@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Button from "../Custom/Button";
-import { toggleModal } from "slices/modalSlice";
 import { reset, setStop } from "slices/gameSlice";
+import { toggleModal } from "slices/modalSlice";
+import Button from "../Custom/Button";
 
 const PauseModal = () => {
   const dispatch = useDispatch();
