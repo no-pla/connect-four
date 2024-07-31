@@ -10,12 +10,13 @@ interface GameState {
     board: ("RED" | "YELLOW" | null)[][];
     currentPlayer: "RED" | "YELLOW";
     connectFour: [] | number[][];
+    winner: "RED" | "YELLOW" | "DRAW";
   };
 }
 
 const MarkerContainer = () => {
   const board = useSelector((state: GameState) => state.game.board);
-  const player = useSelector((state: GameState) => state.game.currentPlayer);
+  const winner = useSelector((state: GameState) => state.game.winner);
   const connectFour = useSelector((state: GameState) => state.game.connectFour);
   const dispatch = useDispatch();
   const colIndex = useRef<{ idx: number }>({ idx: 0 });
@@ -30,20 +31,15 @@ const MarkerContainer = () => {
       dropMarker({
         type: "NORMAL",
         lineNumber,
-        currentPlayer: player,
       })
     );
   };
 
-  const DropWithKeyDown = (
-    lineNumber: number,
-    currentPlayer: "RED" | "YELLOW"
-  ) => {
+  const DropWithKeyDown = (lineNumber: number) => {
     dispatch(
       dropMarker({
         type: "NORMAL",
         lineNumber,
-        currentPlayer,
       })
     );
   };
@@ -102,7 +98,7 @@ const MarkerContainer = () => {
           moveColumnWithKeyDown(colIndex.current.idx, "RIGHT");
           return;
         case "Enter":
-          DropWithKeyDown(colIndex.current.idx, player);
+          DropWithKeyDown(colIndex.current.idx);
           return;
         default:
           return;
@@ -115,6 +111,10 @@ const MarkerContainer = () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
+  useEffect(() => {
+    colIndex.current.idx = 0;
+  }, [winner]);
 
   return (
     <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:-mt-[2px] mini:mb-10 mini:-mt-[2px] mini:ml-[6px] mini:gap-x-1">

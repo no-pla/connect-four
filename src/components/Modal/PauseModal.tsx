@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { reset, setStop } from "slices/gameSlice";
 import { toggleModal } from "slices/modalSlice";
@@ -8,13 +8,6 @@ import Button from "../Custom/Button";
 const PauseModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const firstPlayer = useSelector(
-    (state: {
-      game: {
-        firstPlayer: "RED" | "YELLOW";
-      };
-    }) => state.game.firstPlayer
-  );
 
   const continueGame = () => {
     dispatch(toggleModal());
@@ -23,11 +16,7 @@ const PauseModal = () => {
 
   const resetGame = () => {
     dispatch(toggleModal());
-    dispatch(
-      reset({
-        firstPlayer,
-      })
-    );
+    dispatch(reset());
   };
 
   const goBackHome = () => {

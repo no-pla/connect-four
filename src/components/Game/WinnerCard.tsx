@@ -10,9 +10,8 @@ interface GameState {
 const WinnerCard = () => {
   const dispatch = useDispatch();
   const winner = useSelector((state: GameState) => state.game.winner);
-  const firstPlayer = useSelector((state: GameState) => state.game.firstPlayer);
   const resetGame = () => {
-    dispatch(reset({ firstPlayer }));
+    dispatch(reset());
   };
 
   return (

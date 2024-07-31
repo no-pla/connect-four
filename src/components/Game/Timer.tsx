@@ -26,7 +26,6 @@ const Timer = () => {
         dispatch(
           dropMarker({
             type: "FORCE",
-            currentPlayer: player,
           })
         );
       }

@@ -42,7 +42,6 @@ interface ActionsData {
   payload: {
     type: "NORMAL" | "FORCE";
     lineNumber?: number;
-    currentPlayer: "RED" | "YELLOW";
   };
 }
 
@@ -147,7 +146,7 @@ export const gameSlice = createSlice({
           const count: number[][] = checkDirection(dx, dy);
 
           if (count.length >= 4) {
-            state.winner = actions.payload.currentPlayer!;
+            state.winner = state.currentPlayer!;
 
             if (state.winner === "RED") {
               state.redWin += 1;
@@ -174,20 +173,14 @@ export const gameSlice = createSlice({
     setStop: (state) => {
       state.stop = !state.stop;
     },
-    reset: (
-      state,
-      actions: {
-        payload: {
-          firstPlayer?: "RED" | "YELLOW";
-        };
-      }
-    ) => {
+    reset: (state) => {
       const newGameState: GameState = {
         ...initialState,
         redWin: state.redWin,
         yellowWin: state.yellowWin,
-        firstPlayer: actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED",
-        currentPlayer: actions.payload.firstPlayer === "RED" ? "YELLOW" : "RED",
+        firstPlayer: state.firstPlayer === "RED" ? "YELLOW" : "RED",
+        currentPlayer: state.firstPlayer === "RED" ? "YELLOW" : "RED",
+        left: "left-[30px]",
       };
 
       return newGameState;
