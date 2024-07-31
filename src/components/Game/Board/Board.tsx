@@ -1,9 +1,9 @@
+import LargeBackBoard from "assets/board-layer-black-large.svg?react";
+import SmallBackBoard from "assets/board-layer-black-small.svg?react";
+import LargeFrontBoard from "assets/board-layer-white-large.svg?react";
+import SmallFrontBoard from "assets/board-layer-white-small.svg?react";
 import React from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import LargeFrontBoard from "assets/board-layer-white-large.svg?react";
-import LargeBackBoard from "assets/board-layer-black-large.svg?react";
-import SmallFrontBoard from "assets/board-layer-white-small.svg?react";
-import SmallBackBoard from "assets/board-layer-black-small.svg?react";
 import Timer from "../Timer";
 import WinnerCard from "../WinnerCard";
 

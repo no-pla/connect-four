@@ -1,8 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useInterval } from "../../hooks/useInterval";
-import { dropMarker, ticktock } from "slices/gameSlice";
 import RedTimer from "assets/turn-background-red.svg?react";
 import YellowTimer from "assets/turn-background-yellow.svg?react";
+import { useDispatch, useSelector } from "react-redux";
+import { dropMarker, ticktock } from "slices/gameSlice";
+import { useInterval } from "../../hooks/useInterval";
 
 interface GameState {
   game: {

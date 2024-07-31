@@ -1,14 +1,14 @@
 /// <reference types="vite-plugin-svgr/client" />
 
+import Logo from "assets/logo.svg?react";
+import PlayWithUser from "assets/player-vs-player.svg?react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Container from "../Container";
-import Button from "./Button";
-import Modal from "../Modal/Modal";
 import Backdrop from "../Modal/Backdrop";
+import Modal from "../Modal/Modal";
 import RuleModal from "../Modal/RuleModal";
-import Logo from "assets/logo.svg?react";
-import PlayWithUser from "assets/player-vs-player.svg?react";
+import Button from "./Button";
 
 const LandingBox = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -58,5 +58,3 @@ const LandingBox = () => {
 };
 
 export default LandingBox;
-
-// TODO: esc 누르면 모달 닫히기
