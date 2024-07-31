@@ -11,8 +11,11 @@ describe("랜딩 페이지 테스트", () => {
     });
 
     it("버튼이 모두 렌더링되는지 테스트한다", () => {
-      const buttons = screen.getAllByRole("button");
-      expect(buttons).length(2);
+      const ruleOpenButton = screen.getByTestId("rule-modal-open-button");
+      const gameStartButton = screen.getByTestId("play-button");
+
+      expect(ruleOpenButton).toBeInTheDocument();
+      expect(gameStartButton).toBeInTheDocument();
     });
 
     it("로고가 올바르게 렌더링되는지 테스트한다", () => {
@@ -23,7 +26,6 @@ describe("랜딩 페이지 테스트", () => {
 
   describe("플로우 테스트", () => {
     it("첫 번째 버튼 클릭 시 게임 페이지로 이동하는지 테스트한다", async () => {
-      const user = userEvent.setup();
       render(<LandingBox />, { wrapper: BrowserRouter });
 
       const gameStartButton = screen.getByRole("button", {
@@ -31,7 +33,7 @@ describe("랜딩 페이지 테스트", () => {
       });
       expect(gameStartButton).toBeInTheDocument();
 
-      await user.click(gameStartButton);
+      await userEvent.click(gameStartButton);
 
       expect(window.location.pathname).toBe("/game");
     });
@@ -50,7 +52,7 @@ describe("랜딩 페이지 테스트", () => {
         document.body.appendChild(portalRoot);
       }
 
-      const modalOpenButton = getByTestId("modal-open-button");
+      const modalOpenButton = getByTestId("rule-modal-open-button");
       expect(modalOpenButton).toBeInTheDocument();
 
       await user.click(modalOpenButton);
@@ -74,7 +76,7 @@ describe("랜딩 페이지 테스트", () => {
         document.body.appendChild(portalRoot);
       }
 
-      const modalOpenButton = getByTestId("modal-open-button");
+      const modalOpenButton = getByTestId("rule-modal-open-button");
       expect(modalOpenButton).toBeInTheDocument();
 
       await user.click(modalOpenButton);
