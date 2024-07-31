@@ -25,6 +25,7 @@ const LandingBox = () => {
           style={{
             margin: "0 auto",
           }}
+          aria-label="로고"
         />
         <div className="flex flex-col gap-[30px] mt-20">
           <Button
@@ -32,6 +33,7 @@ const LandingBox = () => {
             primary
             onClick={() => navigate("/game")}
             style="text-left"
+            testId="play-button"
           >
             <PlayWithUser />
           </Button>
@@ -39,7 +41,7 @@ const LandingBox = () => {
             text="게임 규칙"
             primary={false}
             onClick={toggleModal}
-            testId="modal-open-button"
+            testId="rule-modal-open-button"
             style="text-left"
           />
         </div>
@@ -56,3 +58,5 @@ const LandingBox = () => {
 };
 
 export default LandingBox;
+
+// TODO: esc 누르면 모달 닫히기

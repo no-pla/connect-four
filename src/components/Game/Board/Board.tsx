@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { shallowEqual, useSelector } from "react-redux";
 import LargeFrontBoard from "assets/board-layer-white-large.svg?react";
 import LargeBackBoard from "assets/board-layer-black-large.svg?react";
 import SmallFrontBoard from "assets/board-layer-white-small.svg?react";
@@ -14,7 +14,10 @@ interface GameState {
 }
 
 const Board = ({ children }: { children: React.ReactNode }) => {
-  const winner = useSelector((state: GameState) => state.game.winner);
+  const winner = useSelector(
+    (state: GameState) => state.game.winner,
+    shallowEqual
+  );
 
   return (
     <section
