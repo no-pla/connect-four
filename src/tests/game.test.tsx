@@ -179,7 +179,6 @@ describe("게임 페이지 테스트", () => {
           cases,
           dropMarker({
             type: "NORMAL",
-            currentPlayer: cases.currentPlayer,
             lineNumber: condition.lineNumber,
           })
         ).board[condition.lineNumber];
@@ -221,7 +220,6 @@ describe("게임 페이지 테스트", () => {
           cases,
           dropMarker({
             type: "FORCE",
-            currentPlayer: cases.currentPlayer,
           })
         );
         expect(result.timer).toBe(30);
@@ -240,7 +238,6 @@ describe("게임 페이지 테스트", () => {
           },
           dropMarker({
             type: "FORCE",
-            currentPlayer: player,
           })
         );
 
@@ -267,7 +264,6 @@ describe("게임 페이지 테스트", () => {
         clickTestCase,
         dropMarker({
           type: "NORMAL",
-          currentPlayer: clickTestCase.currentPlayer,
           lineNumber: 6,
         })
       );
@@ -278,10 +274,7 @@ describe("게임 페이지 테스트", () => {
 
   describe("게임 결과 테스트", () => {
     describe("승리 테스트", () => {
-      const horizontalWinData: [
-        GameState,
-        { currentPlayer: "RED" | "YELLOW"; dropLine: number }
-      ][] = [
+      const horizontalWinData: [GameState, { dropLine: number }][] = [
         [
           {
             ...initialState,
@@ -299,7 +292,6 @@ describe("게임 페이지 테스트", () => {
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
           {
-            currentPlayer: "RED",
             dropLine: 5,
           },
         ],
@@ -320,7 +312,6 @@ describe("게임 페이지 테스트", () => {
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
           {
-            currentPlayer: "YELLOW",
             dropLine: 6,
           },
         ],
@@ -341,7 +332,6 @@ describe("게임 페이지 테스트", () => {
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
           {
-            currentPlayer: "YELLOW",
             dropLine: 5,
           },
         ],
@@ -349,23 +339,19 @@ describe("게임 페이지 테스트", () => {
 
       it.each(horizontalWinData)(
         "가로 승리 조건을 확인하는지 테스트한다.",
-        (cases, { dropLine, currentPlayer }) => {
+        (cases, { dropLine }) => {
           const result = gameSlice(
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: cases.currentPlayer,
               lineNumber: dropLine,
             })
           );
-          expect(result.winner).toEqual(currentPlayer);
+          expect(result.winner).toEqual(cases.currentPlayer);
         }
       );
 
-      const verticalWinCases: [
-        GameState,
-        { currentPlayer: "RED" | "YELLOW"; dropLine: number }
-      ][] = [
+      const verticalWinCases: [GameState, { dropLine: number }][] = [
         [
           {
             ...initialState,
@@ -382,7 +368,7 @@ describe("게임 페이지 테스트", () => {
             markerCount: 6,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
-          { currentPlayer: "RED", dropLine: 3 },
+          { dropLine: 3 },
         ],
         [
           {
@@ -400,30 +386,26 @@ describe("게임 페이지 테스트", () => {
             markerCount: 8,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
-          { currentPlayer: "YELLOW", dropLine: 3 },
+          { dropLine: 3 },
         ],
       ];
 
       it.each(verticalWinCases)(
         "세로 승리 조건을 확인하는지 테스트한다.",
-        (cases, { dropLine, currentPlayer }) => {
+        (cases, { dropLine }) => {
           const result = gameSlice(
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: cases.currentPlayer,
               lineNumber: dropLine,
             })
           );
 
-          expect(result.winner).toEqual(currentPlayer);
+          expect(result.winner).toEqual(cases.currentPlayer);
         }
       );
 
-      const diagonalWinCases: [
-        GameState,
-        { currentPlayer: "RED" | "YELLOW"; dropLine: number }
-      ][] = [
+      const diagonalWinCases: [GameState, { dropLine: number }][] = [
         [
           {
             ...initialState,
@@ -440,7 +422,7 @@ describe("게임 페이지 테스트", () => {
             markerCount: 10,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
-          { currentPlayer: "RED", dropLine: 3 },
+          { dropLine: 3 },
         ],
         [
           {
@@ -458,7 +440,7 @@ describe("게임 페이지 테스트", () => {
             markerCount: 11,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
-          { currentPlayer: "YELLOW", dropLine: 3 },
+          { dropLine: 3 },
         ],
         [
           {
@@ -476,30 +458,26 @@ describe("게임 페이지 테스트", () => {
             markerCount: 9,
             notMaxLine: [0, 1, 2, 3, 4, 5, 6],
           },
-          { currentPlayer: "RED", dropLine: 2 },
+          { dropLine: 2 },
         ],
       ];
 
       it.each(diagonalWinCases)(
         "대각선 승리 조건을 확인하는지 테스트한다.",
-        (cases, { dropLine, currentPlayer }) => {
+        (cases, { dropLine }) => {
           const result = gameSlice(
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: cases.currentPlayer,
               lineNumber: dropLine,
             })
           );
 
-          expect(result.winner).toEqual(currentPlayer);
+          expect(result.winner).toEqual(cases.currentPlayer);
         }
       );
 
-      const drawWinCases: [
-        GameState,
-        { currentPlayer: "RED" | "YELLOW"; dropLine: number }
-      ][] = [
+      const drawWinCases: [GameState, { dropLine: number }][] = [
         [
           {
             ...initialState,
@@ -518,7 +496,6 @@ describe("게임 페이지 테스트", () => {
             notMaxLine: [2],
           },
           {
-            currentPlayer: "YELLOW",
             dropLine: 2,
           },
         ],
@@ -540,7 +517,6 @@ describe("게임 페이지 테스트", () => {
             notMaxLine: [4],
           },
           {
-            currentPlayer: "RED",
             dropLine: 4,
           },
         ],
@@ -548,12 +524,11 @@ describe("게임 페이지 테스트", () => {
 
       it.each(drawWinCases)(
         "보드가 꽉 찼을 때 무승부로 처리되는지 테스트한다.",
-        (cases, { dropLine, currentPlayer }) => {
+        (cases, { dropLine }) => {
           const result = gameSlice(
             cases,
             dropMarker({
               type: "NORMAL",
-              currentPlayer: currentPlayer,
               lineNumber: dropLine,
             })
           );
@@ -587,12 +562,7 @@ describe("게임 페이지 테스트", () => {
         connectFour: [],
       };
 
-      const resetData = gameSlice(
-        previousState,
-        reset({
-          firstPlayer: previousState.firstPlayer,
-        })
-      );
+      const resetData = gameSlice(previousState, reset());
 
       expect(resetData.board).toStrictEqual(initialState.board);
       expect(resetData.connectFour).toStrictEqual(initialState.connectFour);
