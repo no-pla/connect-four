@@ -1,6 +1,6 @@
-import Board from "./Board";
-import UserScore from "../UserScore";
 import BoardHeader from "../BoardHeader";
+import UserScore from "../UserScore";
+import Board from "./Board";
 import MarkerContainer from "./MarkerContainer";
 
 const GameBoard = () => {

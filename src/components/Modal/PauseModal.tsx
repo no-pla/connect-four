@@ -1,8 +1,9 @@
-import Button from "../Custom/Button";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleModal } from "slices/modalSlice";
-import { reset, setStop } from "slices/gameSlice";
 import { useNavigate } from "react-router-dom";
+import { reset, setStop } from "slices/gameSlice";
+import { toggleModal } from "slices/modalSlice";
+import Button from "../Custom/Button";
 
 const PauseModal = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,21 @@ const PauseModal = () => {
   const goBackHome = () => {
     navigate("/");
   };
+
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      const keyType = event.key;
+      if (keyType === "Escape") {
+        continueGame();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return function cleanup() {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <div className="pt-[50px] pb-[54px] px-[34px] text-center mobile:normal-border mini:normal-border rounded-[40px]">

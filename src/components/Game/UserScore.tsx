@@ -1,6 +1,6 @@
-import { useSelector } from "react-redux";
 import RedIcon from "assets/player-one.svg?react";
 import YellowIcon from "assets/player-two.svg?react";
+import { useSelector } from "react-redux";
 
 interface GameState {
   game: {
