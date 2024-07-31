@@ -37,7 +37,6 @@ const PauseModal = () => {
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
       const keyType = event.key;
-      console.log(keyType);
       if (keyType === "Escape") {
         continueGame();
       }
