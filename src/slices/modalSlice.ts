@@ -4,7 +4,7 @@ const initialState: {
   modalOpen: boolean;
 } = {
   modalOpen: false,
-};
+} as const;
 
 export const modalSlice = createSlice({
   name: "modal",
