@@ -68,9 +68,13 @@ const MarkerContainer = () => {
    * @returns
    */
   const emphasizeWinMarker = (row: number, col: number): boolean => {
-    return connectFour.some(
-      (position) => position[0] === row && position[1] === col
-    );
+    if (winner === "RED" || winner === "YELLOW") {
+      return connectFour.some(
+        (position) => position[0] === row && position[1] === col
+      );
+    } else {
+      return false;
+    }
   };
 
   const onHoverColumn = (index: number) => {
@@ -86,7 +90,7 @@ const MarkerContainer = () => {
      * @returns void
      */
     function handleKeyDown(event: KeyboardEvent) {
-      const keyType = event.key;
+      const keyType = event.code;
 
       if (!colIndex.current) return;
 
@@ -98,6 +102,7 @@ const MarkerContainer = () => {
           moveColumnWithKeyDown(colIndex.current.idx, "RIGHT");
           return;
         case "Enter":
+        case "Space":
           DropWithKeyDown(colIndex.current.idx);
           return;
         default:
