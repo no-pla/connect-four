@@ -194,7 +194,7 @@ export const gameSlice = createSlice({
       state.left = actions.payload.columnNumber;
     },
     getSavedData: (
-      state,
+      _state,
       actions: {
         payload: {
           game: GameState;
