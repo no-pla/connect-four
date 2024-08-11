@@ -19,7 +19,7 @@ interface GameState {
   stop: boolean;
   notMaxLine: number[] | [];
   connectFour: (number | null)[][];
-  left: string;
+  left: number;
 }
 
 const initialState: GameState = {
@@ -42,7 +42,7 @@ const initialState: GameState = {
   stop: false,
   notMaxLine: [0, 1, 2, 3, 4, 5, 6],
   connectFour: [],
-  left: "left-[30px]",
+  left: 0,
 };
 
 describe("게임 페이지 테스트", () => {
@@ -697,6 +697,7 @@ describe("게임 페이지 테스트", () => {
     it.each(winnerEmphasizeTestCases)(
       "승리 시 마커가 시각적으로 강조되는지 테스트한다.",
       (cases) => {
+        localStorage.setItem("connect-four", JSON.stringify(cases));
         const { getAllByTestId } = render(
           <Provider
             store={setupStore({
@@ -707,7 +708,6 @@ describe("게임 페이지 테스트", () => {
           </Provider>
         );
         const connectFour = getAllByTestId("emphasizeMarker");
-
         expect(connectFour.length).toBe(4);
       }
     );

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { dropMarker, emphasizeColumn } from "slices/gameSlice";
+import { dropMarker, emphasizeColumn, getSavedData } from "slices/gameSlice";
 import EmptyMarker from "./Markers/EmptyMarker";
 import RedMarker from "./Markers/RedMarker";
 import YellowMarker from "./Markers/YellowMarker";
@@ -120,6 +120,13 @@ const MarkerContainer = () => {
   useEffect(() => {
     colIndex.current.idx = 0;
   }, [winner]);
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("connect-four");
+    if (savedData) {
+      dispatch(getSavedData({ game: JSON.parse(savedData) }));
+    }
+  }, []);
 
   return (
     <div className="grid gap-x-4 grid-cols-7 grid-row-6 grid-flow-rows mt-2 ml-4 w-full mobile:ml-[6px] mobile:gap-[5px] tablet:mt-0 mobile:-mt-[2px] mini:mb-10 mini:-mt-[2px] mini:ml-[6px] mini:gap-x-1">
