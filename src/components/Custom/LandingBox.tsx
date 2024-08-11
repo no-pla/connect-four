@@ -9,13 +9,21 @@ import Backdrop from "../Modal/Backdrop";
 import Modal from "../Modal/Modal";
 import RuleModal from "../Modal/RuleModal";
 import Button from "./Button";
+import { useDispatch } from "react-redux";
+import { reset } from "slices/gameSlice";
 
 const LandingBox = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleModal = () => {
     setOpenModal((prev) => !prev);
+  };
+
+  const startGame = () => {
+    dispatch(reset());
+    navigate("/game");
   };
 
   return (
@@ -31,7 +39,7 @@ const LandingBox = () => {
           <Button
             text="유저와 플레이"
             primary
-            onClick={() => navigate("/game")}
+            onClick={() => startGame()}
             style="text-left"
             testId="play-button"
           >

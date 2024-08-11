@@ -5,7 +5,6 @@ import Modal from "components/Modal/Modal";
 import PauseModal from "components/Modal/PauseModal";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetAll } from "slices/gameSlice";
 import { resetModal } from "slices/modalSlice";
 
 const Index = () => {
@@ -19,7 +18,6 @@ const Index = () => {
   );
 
   useEffect(() => {
-    dispatch(resetAll());
     dispatch(resetModal());
   }, []);
 

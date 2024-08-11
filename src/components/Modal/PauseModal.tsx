@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { reset, setStop } from "slices/gameSlice";
+import { resetAll, setStop } from "slices/gameSlice";
 import { toggleModal } from "slices/modalSlice";
 import Button from "../Custom/Button";
 
@@ -16,7 +16,7 @@ const PauseModal = () => {
 
   const resetGame = () => {
     dispatch(toggleModal());
-    dispatch(reset());
+    dispatch(resetAll());
   };
 
   const goBackHome = () => {
@@ -49,7 +49,7 @@ const PauseModal = () => {
           style="text-center"
         />
         <Button
-          text="처음부터"
+          text="초기화하기"
           primary={false}
           onClick={() => resetGame()}
           style="text-center"
