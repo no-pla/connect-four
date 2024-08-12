@@ -122,7 +122,12 @@ const MarkerContainer = () => {
   }, [winner]);
 
   useEffect(() => {
-    const savedData = localStorage.getItem("connect-four");
+    let savedData;
+    try {
+      savedData = localStorage.getItem("connect-four");
+    } catch (error) {
+      return;
+    }
     if (savedData) {
       dispatch(getSavedData({ game: JSON.parse(savedData) }));
     }
