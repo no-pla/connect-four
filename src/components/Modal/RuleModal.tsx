@@ -26,7 +26,8 @@ const RuleModal = ({ onClick }: { onClick: () => void }) => {
         >
           <li className="marker:ml-4">빨간 마커가 먼저 두기 시작합니다.</li>
           <li className="marker:ml-4">
-            각 유저는 번걸아 가며, 턴마다 하나의 마커를 둘 수 있습니다.
+            각 유저는 번걸아 가며, 턴마다 하나의 마커를 둘 수 있습니다. (마커는
+            클릭, 엔터 혹은 스페이스바로 둘 수 있습니다.)
           </li>
           <li className="marker:ml-4">
             한 줄에 마커를 4개 두거나, 더 이상 마커를 둘 수 없으면 게임은
