@@ -1,4 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { Action, createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { startListening } from "../../src/middleware/localStorageMiddleware";
+
+interface RootState {
+  game: GameState;
+}
 
 interface GameState {
   board: ("RED" | "YELLOW" | null)[][];
@@ -107,12 +112,6 @@ export const gameSlice = createSlice({
 
       state.currentPlayer = state.currentPlayer === "RED" ? "YELLOW" : "RED";
       state.timer = 30;
-
-      gameSlice.caseReducers.setLocalStorage(state, {
-        payload: {
-          game: state,
-        },
-      });
     },
     ticktock: (state) => {
       state.timer -= 1;
@@ -193,6 +192,12 @@ export const gameSlice = createSlice({
       if (state.stop || state.winner !== null) return;
       state.left = actions.payload.columnNumber;
     },
+    /**
+     * 만약 로컬 스토리지에 저장 데이터가 있다면, 현재 state로 설정
+     * @param _state
+     * @param actions
+     * @returns
+     */
     getSavedData: (
       _state,
       actions: {
@@ -201,25 +206,8 @@ export const gameSlice = createSlice({
         };
       }
     ) => actions.payload.game,
-    setLocalStorage: (
-      state,
-      actions: {
-        payload?: {
-          game?: GameState;
-        };
-      }
-    ) => {
-      if (actions.payload?.game) {
-        localStorage.setItem(
-          "connect-four",
-          JSON.stringify(actions.payload.game)
-        );
-      } else {
-        localStorage.setItem("connect-four", JSON.stringify(state));
-      }
-    },
     reset: (state) => {
-      const newGameState: GameState = {
+      return {
         ...initialState,
         redWin: state.redWin,
         yellowWin: state.yellowWin,
@@ -227,26 +215,8 @@ export const gameSlice = createSlice({
         currentPlayer: state.firstPlayer === "RED" ? "YELLOW" : "RED",
         left: 0,
       };
-
-      const previousSavedData = localStorage.getItem("connect-four");
-
-      if (previousSavedData) {
-        const parsedSavedData: GameState = JSON.parse(previousSavedData);
-        const resetSavedData: GameState = {
-          ...initialState,
-          redWin: parsedSavedData.redWin,
-          yellowWin: parsedSavedData.yellowWin,
-        };
-
-        localStorage.setItem("connect-four", JSON.stringify(resetSavedData));
-      }
-
-      return newGameState;
     },
-    resetAll: () => {
-      localStorage.clear();
-      return initialState;
-    },
+    resetAll: () => initialState,
   },
 });
 
@@ -258,7 +228,21 @@ export const {
   resetAll,
   emphasizeColumn,
   getSavedData,
-  setLocalStorage,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;
+
+startListening({
+  matcher: isAnyOf(dropMarker, reset),
+  effect: (_action: Action, listenerApi) => {
+    const newData = (listenerApi.getState() as RootState).game;
+    localStorage.setItem("connect-four", JSON.stringify(newData));
+  },
+});
+
+startListening({
+  actionCreator: resetAll,
+  effect: () => {
+    localStorage.clear();
+  },
+});
